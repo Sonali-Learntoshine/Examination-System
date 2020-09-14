@@ -1,0 +1,821 @@
+{% load static %}
+{% load extra_filters %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Hello! {{ user }}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <!-- VENDOR CSS -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/linearicons/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/metisMenu/metisMenu.css' %}">
+    <link rel="stylesheet"
+          href="{% static 'assets/vendor/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/chartist/css/chartist.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/toastr/toastr.min.css' %}">
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+    <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+    <link rel="stylesheet" href="{% static 'assets/css/demo.css' %}">
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+    <!-- ICONS -->
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'assets/img/apple-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'assets/img/favicon.png' %}">
+
+    <style>
+        .item img {
+            height: 450px !important;
+            width: 100% !important;
+            margin-left: auto;
+        }
+
+    </style>
+</head>
+
+<body>
+
+{% if messages %}
+    {% for message in messages %}
+        {% if message.tags == 'error' %}
+            <div class="alert alert-danger text-center alert-dismissible">
+        {% else %}
+            <div class="alert text-center alert-{{ message.tags }} alert-dismissible">
+        {% endif %}
+
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>{{ message.tags }} !</strong> {{ message }}
+    </div>
+    {% endfor %}
+{% endif %}
+
+<!-- WRAPPER -->
+<div id="wrapper">
+    <!-- NAVBAR -->
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-btn">
+                <button type="button" class="btn-toggle-offcanvas"><i class="lnr lnr-menu"></i></button>
+            </div>
+            <!-- logo -->
+            <div class="navbar-brand">
+                <a href="{% url 'teacher:dashboard' user.username %}">HOD Dashboard</a>
+            </div>
+            <!-- end logo -->
+            <div class="navbar-right">
+                <!-- search form -->
+                <form id="navbar-search" class="navbar-form search-form">
+                    <input value="" class="form-control" placeholder="Search here..." type="text">
+                    <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
+                </form>
+                <!-- end search form -->
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- END NAVBAR -->
+    <!-- LEFT SIDEBAR -->
+    <div id="left-sidebar" class="sidebar">
+        <button type="button" class="btn btn-xs btn-link btn-toggle-fullwidth">
+            <span class="sr-only">Toggle Fullwidth</span>
+            <i class="fa fa-angle-left"></i>
+        </button>
+        <div class="sidebar-scroll">
+            <div class="user-account">
+                <img src="{{ request.session.image }}" class="img-responsive img-circle user-photo"
+                     style="border-radius: 50%;" alt="User Profile Picture">
+                <div class="user-info">
+                    <span class="user-name"><strong>{{ user.first_name }} {{ user.last_name }}</strong></span>
+                    {% if user.designation %}
+                        <span class="user-role">{{ user.designation }} [{{ user.dept }}]</span>
+                    {% endif %}
+                    <span class="user-role">{{ user }}</span>
+                    <span class="user-status"><br><i class="fa fa-circle"></i><span>Online</span></span>
+                </div>
+
+            </div>
+            <nav id="left-sidebar-nav" class="sidebar-nav">
+                <ul id="main-menu" class="metismenu">
+                    <li class="active"><a href="{% url 'teacher:dashboard' user.username %}"><i
+                            class="lnr lnr-home"></i>
+                        <span>Dashboard</span></a></li>
+                    <li class=""><a href="{% url 'teacher:hod_add_exam' %}"><i
+                            class="lnr lnr-magic-wand"></i>
+                        <span>Add Exam</span></a></li>
+
+                    <li class="">
+                        <a href="#">
+                            <i class="fa fa-envelope"></i>
+                            <span>Notifications</span>
+                            <span class="badge badge-pill badge-danger">{{ notification|length }}</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="{% url 'teacher:profile' user.username %}">
+                            <i class="far fa-user"></i>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+
+
+                    <li class=""><a href="{% url 'change_password' %}"><i class="fa fa-lock"></i>
+                        <span>Change Password</span></a></li>
+
+                    <li class=""><a href="{% url 'student:logout' %}"><i class="fa fa-hand-o-right"></i>
+                        <span>Logout</span></a></li>
+
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+    <!-- END LEFT SIDEBAR -->
+    <!--MAIN CONTENT -->
+    <main id="main-content" class="page-content">
+        <div class="container-fluid">
+            <h2>HOD Dashboard</h2>
+            <hr>
+
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                    <li data-target="#myCarousel" data-slide-to="2"></li>
+                    <li data-target="#myCarousel" data-slide-to="3"></li>
+                    <li data-target="#myCarousel" data-slide-to="4"></li>
+                </ol>
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+
+                    <div class="item active">
+                        <img src="https://gearopen.com/wp-content/uploads/2018/07/best_laptop_for_students.jpg"
+                             alt="Los Angeles">
+                        <div class="carousel-caption">
+
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <img src="https://c0.wallpaperflare.com/preview/722/962/382/learn-student-laptop-internet.jpg"
+                             alt="Chicago">
+                        <div class="carousel-caption"></div>
+                    </div>
+
+                    <div class="item">
+                        <img src="https://alltechasia.com/wp-content/uploads/2016/07/sites.psu_.edu_.jpg"
+                             alt="Chicago">
+                        <div class="carousel-caption"></div>
+                    </div>
+
+                    <div class="item">
+                        <img src="https://cdn.mos.cms.futurecdn.net/5VxGLaTMXczbgzd3ByDiN3.jpg" alt="Chicago">
+                        <div class="carousel-caption">
+
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <img src="https://wallpapercave.com/wp/wp4498163.jpg" alt="New York">
+                        <div class="carousel-caption">
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- Left and right controls -->
+                <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+
+            <hr>
+            <div class="row">
+                <div class="col-lg-8 mb-2">
+                    <div class="card table-responsive">
+                        <div class="card-header text-white-50 font-weight-bolder text-center"
+                             style="background-color:#6b0392; color: antiquewhite; height: 50px; font-size: xx-large ; font-family:-apple-system">
+                            Faculties
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-responsive  w-100 d-block d-md-table" id="dataTable">
+                                <thead>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>ID</th>
+                                <th>Designation</th>
+                                <th>Verified</th>
+                                <th>Controls</th>
+                                </thead>
+                                <tfoot>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>ID</th>
+                                <th>Designation</th>
+                                <th>Verified</th>
+                                <th>Controls</th>
+                                </tfoot>
+
+                                <tbody>
+                                {% for faculty in faculties %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ faculty.get_full_name }}</td>
+                                        <td>{{ faculty.user_id }}</td>
+                                        <td>{{ faculty.designation }}</td>
+                                        <td class="text-center">
+                                            {% if faculty.is_active %}
+                                                <i class="text-success fas fa-check-circle"></i>
+                                            {% else %}
+                                                <i class="text-danger fas fa-times-circle"></i>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-danger mb-1"
+                                                    onclick="DeleteConfirmation('{% url 'teacher:delete-profile' faculty.user_id %}?next={{ request.path|urlencode }}')">
+                                                delete
+                                            </button>&nbsp;
+                                            <button class="btn btn-sm btn-info mb-1"
+                                                    onclick="window.location.href='{% url 'teacher:profile' faculty.user_id %}'">
+                                                view
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                            {% comment %}
+                                    <a href="#">
+                                        <li class="list-group-item small mb-2 list-group-item-action text-center">
+                                            <strong>Add Faculties</strong>
+                                        </li>
+                                    </a>
+                                    {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-header font-weight-bolder text-center"
+                             style="background-color:goldenrod; color: darkred; height: 50px; font-size: xx-large ; font-family:-apple-system">
+                            Exams
+                        </div>
+                        <div class="card-body table-responsive">
+                            <table class="table table-responsive  w-100 d-block d-md-table table-hover table-bordered font-weight-bold text-black-50">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Session</th>
+                                    <th>Date</th>
+                                    <th>Last Date</th>
+                                    <th>Status</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for i in exam %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td><a href="{% url 'exam:exam-details' i.slug %}" class="card-link"
+                                               data-toggle="tooltip" title="Open">{{ i.name }}</a></td>
+                                        <td>{{ i.start_date.year }}</td>
+                                        <td>{{ i.start_date }}</td>
+                                        <td>{{ i.end_date }}</td>
+                                        <td><span class="label label-info">{{ i.status }}</span></td>
+                                    </tr>
+                                {% empty %}
+                                    <p>No active exams ask Examination controller to add exams</p>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-lg-8 mb-2">
+                    <div class="card table-responsive">
+                        <div class="card-header text-white-50 font-weight-bolder text-center"
+                             style="background-color:#525965; color: wheat; height: 50px; font-size: xx-large ; font-family:-apple-system">
+                            Students
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-responsive  w-100 d-block d-md-table" id="studentTable">
+                                <thead>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Roll Number</th>
+                                <th>Semester</th>
+                                <th>Verified</th>
+                                <th>Controls</th>
+                                </thead>
+                                <tfoot class="text-muted">
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>ID</th>
+                                <th>Semester</th>
+                                <th>Verified</th>
+                                <th>Controls</th>
+                                </tfoot>
+
+                                <tbody>
+                                {% for student in students %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ student.get_full_name }}</td>
+                                        <td>{{ student.user_id }}</td>
+                                        <td>{{ student.sem }}</td>
+                                        <td class="text-justify">1
+                                            {% if student.is_active %}
+                                                <i class="text-success fas fa-check-circle"></i>
+                                            {% else %}
+                                                <i class="text-danger fas fa-times-circle"></i>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-danger mb-1"
+                                                    onclick="DeleteConfirmation('{% url 'student:delete-profile' student.user_id %}?next={{ request.path|urlencode }}')">
+                                                delete
+                                            </button>
+                                            <button class="btn btn-sm btn-info mb-1"
+                                                    onclick="window.location.href='{% url 'student:profile' student.user_id %}'">
+                                                view
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card" style="margin: auto; text-align: center;">
+                        <div class="card-header text-white-50 font-weight-bolder text-center"
+                             style="background-color:teal; color: greenyellow; height: 50px; font-size: xx-large ; font-family:-apple-system">
+                            Subjects
+                        </div>
+                        <div class="card-body">
+                            <div id="id_subject">
+                                <ul class="list-group">
+                                    <a class="card-link" data-toggle="collapse" href="#thirdSem">
+                                        <li class="list-group-item list-group-item-action text-center">
+                                            <strong>Third Semester</strong>
+                                        </li>
+                                    </a>
+
+                                    <div id="thirdSem" class="collapse" data-parent="#id_subject">
+                                        {% for subject in subjects|semester:'3' %}
+                                            <li class="list-group-item rounded mb-1">
+                                                {{ subject }}
+                                            </li>
+                                        {% empty %}
+                                            <li class="list-group-item rounded mb-1 mt-1 list-group-item-danger">
+                                                Not Uploaded
+                                            </li>
+                                        {% endfor %}
+                                    </div>
+                                </ul>
+                                <ul class="list-group">
+                                    <a class="card-link collapsed" data-toggle="collapse" href="#fourthSem">
+                                        <li class="list-group-item list-group-item-action text-center">
+                                            <strong>Fourth Semester</strong>
+                                        </li>
+                                    </a>
+
+                                    <div id="fourthSem" class="collapse" data-parent="#id_subject">
+                                        {% for subject in subjects|semester:'4' %}
+                                            <li class="list-group-item rounded mb-1 mt-1">
+                                                {{ subject }}
+                                            </li>
+                                        {% empty %}
+                                            <li class="list-group-item rounded mb-1 mt-1 list-group-item-danger">
+                                                Not Uploaded
+                                            </li>
+                                        {% endfor %}
+                                    </div>
+                                </ul>
+                                <ul class="list-group">
+                                    <a class="card-link collapsed" data-toggle="collapse" href="#fifthSem">
+                                        <li class="list-group-item list-group-item-action text-center">
+                                            <strong>Fifth Semester</strong>
+                                        </li>
+                                    </a>
+
+                                    <div id="fifthSem" class="collapse" data-parent="#id_subject">
+                                        {% for subject in subjects|semester:'5' %}
+                                            <li class="list-group-item rounded mb-1 mt-1">
+                                                {{ subject }}
+                                            </li>
+                                        {% empty %}
+                                            <li class="list-group-item rounded mb-1 mt-1 list-group-item-danger">
+                                                Not Uploaded
+                                            </li>
+                                        {% endfor %}
+                                    </div>
+                                </ul>
+
+                                <ul class="list-group">
+                                    <a class="card-link collapsed" data-toggle="collapse" href="#sixthSem">
+                                        <li class="list-group-item list-group-item-action text-center">
+                                            <strong>Sixth Semester</strong>
+                                        </li>
+                                    </a>
+
+                                    <div id="sixthSem" class="collapse" data-parent="#id_subject">
+                                        {% for subject in subjects|semester:'6' %}
+                                            <li class="list-group-item rounded mb-1 mt-1">
+                                                {{ subject }}
+                                            </li>
+                                        {% empty %}
+                                            <li class="list-group-item rounded mb-1 mt-1 list-group-item-danger">
+                                                Not Uploaded
+                                            </li>
+                                        {% endfor %}
+                                    </div>
+                                </ul>
+                                <ul class="list-group">
+                                    <a class="card-link collapsed" data-toggle="collapse" href="#seventhSem">
+                                        <li class="list-group-item list-group-item-action text-center">
+                                            <strong>Seventh Semester</strong>
+                                        </li>
+                                    </a>
+
+                                    <div id="seventhSem" class="collapse" data-parent="#id_subject">
+                                        {% for subject in subjects|semester:'7' %}
+                                            <li class="list-group-item rounded mb-1 mt-1">
+                                                {{ subject }}
+                                            </li>
+                                        {% empty %}
+                                            <li class="list-group-item rounded mb-1 mt-1 list-group-item-danger">
+                                                Not Uploaded
+                                            </li>
+                                        {% endfor %}
+                                    </div>
+                                </ul>
+                                <ul class="list-group">
+                                    <a class="card-link collapsed" data-toggle="collapse" href="#EighthSem">
+                                        <li class="list-group-item list-group-item-action text-center">
+                                            <strong>Eighth Semester</strong>
+                                        </li>
+                                    </a>
+
+                                    <div id="EighthSem" class="collapse" data-parent="#id_subject">
+                                        {% for subject in subjects|semester:'8' %}
+                                            <li class="list-group-item rounded mb-1 mt-1">
+                                                {{ subject }}
+                                            </li>
+                                        {% empty %}
+                                            <li class="list-group-item rounded mb-1 mt-1 list-group-item-danger">
+                                                Not Uploaded
+                                            </li>
+                                        {% endfor %}
+                                    </div>
+                                    <br>
+                                    <a href="{% url 'exam_module:add-subject' %}?next={{ request.path|urlencode }}">
+                                        <li class="list-group-item mb-2 list-group-item-action text-center">
+                                            <strong style="color: red">Add Subjects</strong>
+                                        </li>
+                                    </a>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </main>
+</div>
+<!-- END MAIN CONTENT -->
+<div class="clearfix"></div>
+<footer>
+    -------------
+</footer>
+</div>
+<!-- END WRAPPER -->
+<!-- Javascript -->
+<script src="{% static 'assets/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'assets/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/vendor/metisMenu/metisMenu.js' %}"></script>
+<script src="{% static 'assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js' %}"></script>
+<script src="{% static 'assets/vendor/jquery-sparkline/js/jquery.sparkline.min.js' %}"></script>
+<script src="{% static 'assets/vendor/bootstrap-progressbar/js/bootstrap-progressbar.min.js' %}"></script>
+<script src="{% static 'assets/vendor/chartist/js/chartist.min.js' %}"></script>
+<script src="{% static 'assets/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.min.js' %}"></script>
+<script src="{% static 'assets/vendor/chartist-plugin-axistitle/chartist-plugin-axistitle.min.js' %}"></script>
+<script src="{% static 'assets/vendor/chartist-plugin-legend-latest/chartist-plugin-legend.js' %}"></script>
+<script src="{% static 'assets/vendor/toastr/toastr.js' %}"></script>
+<script src="{% static 'assets/scripts/common.js' %}"></script>
+
+
+<script>
+    jQuery(function ($) {
+
+        $(".sidebar-dropdown > a").click(function () {
+            $(".sidebar-submenu").slideUp(200);
+            if (
+                $(this)
+                    .parent()
+                    .hasClass("active")
+            ) {
+                $(".sidebar-dropdown").removeClass("active");
+                $(this)
+                    .parent()
+                    .removeClass("active");
+            } else {
+                $(".sidebar-dropdown").removeClass("active");
+                $(this)
+                    .next(".sidebar-submenu")
+                    .slideDown(200);
+                $(this)
+                    .parent()
+                    .addClass("active");
+            }
+        });
+
+        $("#close-sidebar").click(function () {
+            $(".page-wrapper").removeClass("toggled");
+        });
+        $("#show-sidebar").click(function () {
+            $(".page-wrapper").addClass("toggled");
+        });
+
+    });
+</script>
+
+<script>
+    if ($(window).width() < 630) {
+        $(".page-wrapper").removeClass("toggled");
+    }
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+<script type="text/javascript">
+    function DeleteConfirmation(url) {
+        let r = confirm("Are you Confirm ?");
+        if (r === true) {
+            window.location.href = url;
+        }
+    }
+
+
+</script>
+<script>
+    var table = $('#dataTable').DataTable({
+        "paging": false,
+
+
+    });
+    var student_table = $('#studentTable').DataTable({
+        "paging": false,
+        initComplete: function () {
+            this.api().column(3).each(function () {
+                var column = this;
+                var select = $('<select class="form-control"><option value=""></option></select>')
+                    .appendTo($(column.header()))
+                    .on('change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+
+                        column
+                            .search(val ? '^' + val + '$' : '', true, false)
+                            .draw();
+                    });
+
+                column.data().unique().sort().each(function (d, j) {
+                    select.append('<option value="' + d + '">' + d + '</option>')
+                });
+            });
+        }
+    });
+</script>
+
+
+<script>
+    $(function () {
+
+        // sparkline charts
+        var sparklineNumberChart = function () {
+
+            var params = {
+                width: '140px',
+                height: '30px',
+                lineWidth: '2',
+                lineColor: '#20B2AA',
+                fillColor: false,
+                spotRadius: '2',
+                spotColor: false,
+                minSpotColor: false,
+                maxSpotColor: false,
+                disableInteraction: false
+            };
+
+            $('#number-chart1').sparkline('html', params);
+            $('#number-chart2').sparkline('html', params);
+            $('#number-chart3').sparkline('html', params);
+            $('#number-chart4').sparkline('html', params);
+        };
+
+        sparklineNumberChart();
+
+
+        // traffic sources
+        var dataPie = {
+            series: [45, 25, 30]
+        };
+
+        var labels = ['Direct', 'Organic', 'Referral'];
+        var sum = function (a, b) {
+            return a + b;
+        };
+
+        new Chartist.Pie('#demo-pie-chart', dataPie, {
+            height: "270px",
+            labelInterpolationFnc: function (value, idx) {
+                var percentage = Math.round(value / dataPie.series.reduce(sum) * 100) + '%';
+                return labels[idx] + ' (' + percentage + ')';
+            }
+        });
+
+
+        // progress bars
+        $('.progress .progress-bar').progressbar({
+            display_text: 'none'
+        });
+
+        // line chart
+        var data = {
+            labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            series: [
+                [200, 380, 350, 480, 410, 450, 550],
+            ]
+        };
+
+        var options = {
+            height: "200px",
+            showPoint: true,
+            showArea: true,
+            axisX: {
+                showGrid: false
+            },
+            lineSmooth: false,
+            chartPadding: {
+                top: 0,
+                right: 0,
+                bottom: 30,
+                left: 30
+            },
+            plugins: [
+                Chartist.plugins.tooltip({
+                    appendToBody: true
+                }),
+                Chartist.plugins.ctAxisTitle({
+                    axisX: {
+                        axisTitle: 'Day',
+                        axisClass: 'ct-axis-title',
+                        offset: {
+                            x: 0,
+                            y: 50
+                        },
+                        textAnchor: 'middle'
+                    },
+                    axisY: {
+                        axisTitle: 'Reach',
+                        axisClass: 'ct-axis-title',
+                        offset: {
+                            x: 0,
+                            y: -10
+                        },
+                    }
+                })
+            ]
+        };
+
+        new Chartist.Line('#demo-line-chart', data, options);
+
+
+        // sales performance chart
+        var sparklineSalesPerformance = function () {
+
+            var lastWeekData = [142, 164, 298, 384, 232, 269, 211];
+            var currentWeekData = [352, 267, 373, 222, 533, 111, 60];
+
+            $('#chart-sales-performance').sparkline(lastWeekData, {
+                fillColor: 'rgba(90, 90, 90, 0.1)',
+                lineColor: '#5A5A5A',
+                width: '' + $('#chart-sales-performance').innerWidth() + '',
+                height: '100px',
+                lineWidth: '2',
+                spotColor: false,
+                minSpotColor: false,
+                maxSpotColor: false,
+                chartRangeMin: 0,
+                chartRangeMax: 1000
+            });
+
+            $('#chart-sales-performance').sparkline(currentWeekData, {
+                composite: true,
+                fillColor: 'rgba(60, 137, 218, 0.1)',
+                lineColor: '#3C89DA',
+                lineWidth: '2',
+                spotColor: false,
+                minSpotColor: false,
+                maxSpotColor: false,
+                chartRangeMin: 0,
+                chartRangeMax: 1000
+            });
+        }
+
+        sparklineSalesPerformance();
+
+        var sparkResize;
+        $(window).on('resize', function () {
+            clearTimeout(sparkResize);
+            sparkResize = setTimeout(sparklineSalesPerformance, 200);
+        });
+
+
+        // top products
+        var dataStackedBar = {
+            labels: ['Q1', 'Q2', 'Q3'],
+            series: [
+                [800000, 1200000, 1400000],
+                [200000, 400000, 500000],
+                [100000, 200000, 400000]
+            ]
+        };
+
+        new Chartist.Bar('#chart-top-products', dataStackedBar, {
+            height: "250px",
+            stackBars: true,
+            axisX: {
+                showGrid: false
+            },
+            axisY: {
+                labelInterpolationFnc: function (value) {
+                    return (value / 1000) + 'k';
+                }
+            },
+            plugins: [
+                Chartist.plugins.tooltip({
+                    appendToBody: true
+                }),
+                Chartist.plugins.legend({
+                    legendNames: ['Phone', 'Laptop', 'PC']
+                })
+            ]
+        }).on('draw', function (data) {
+            if (data.type === 'bar') {
+                data.element.attr({
+                    style: 'stroke-width: 30px'
+                });
+            }
+        });
+
+
+        // notification popup
+        toastr.options.closeButton = true;
+        toastr.options.positionClass = 'toast-bottom-right';
+        toastr.options.showDuration = 1000;
+
+    });
+</script>
+</body>
+
+</html>

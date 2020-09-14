@@ -1,0 +1,94 @@
+{% extends 'exam_module/base.html' %}
+{% block title %}Form{% endblock %}
+{% load static %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+                <p><span style="color: red"> * </span> fields are required</p>
+                <form enctype="multipart/form-data" method="post">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    {{ form.source.errors }}
+                    {{ form.source }}
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="id_question">Question</label>
+                        <div class="col-sm-10">
+                            {{ form.question }}
+                            <div class="invalid-feedback">
+                                {{ form.question.errors }}
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if type == 'MCQ' %}
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="id_a">A</label>
+                            <div class="col-sm-10">
+                                {{ form.a }}
+                                <div class="invalid-feedback">
+                                    {{ form.a.errors }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="id_b">B</label>
+                            <div class="col-sm-10">
+                                {{ form.b }}
+                                <div class="invalid-feedback">
+                                    {{ form.b.errors }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="id_c">C</label>
+                            <div class="col-sm-10">
+                                {{ form.c }}
+                                <div class="invalid-feedback">
+                                    {{ form.c.errors }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="id_d">D</label>
+                            <div class="col-sm-10">
+                                {{ form.d }}
+                                <div class="invalid-feedback">
+                                    {{ form.d.errors }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="id_answer">Answer</label>
+                            <div class="col-sm-10">
+                                {{ form.answer }}
+                                <div class="invalid-feedback">
+                                    {{ form.answer.errors }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="id_max_marks">Max Marks</label>
+                        <div class="col-sm-10">
+                            {{ form.max_marks }}
+                            <div class="invalid-feedback">
+                                {{ form.max_marks.errors }}
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        window.onunload = refreshParent;
+
+        function refreshParent() {
+            window.opener.location.reload();
+        }
+    </script>
+{% endblock %}

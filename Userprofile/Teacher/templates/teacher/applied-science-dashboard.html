@@ -1,0 +1,158 @@
+{% extends 'faculty/base.html' %}
+{% load static %}
+{% load extra_filters %}
+{% block title %}Dashboard | {{ user }}{% endblock %}
+{% block body %}
+    <div class="page-wrapper chiller-theme toggled">
+        {% include 'module/navbar.html' %}
+        <main class="page-content">
+            <div class="container-fluid">
+                <h2>Applied Science Dashboard</h2>
+                <hr>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="card">
+                            <div class="card-header font-weight-bolder text-center"
+                                 style="background-color: goldenrod;">Exams
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-responsive  w-100 d-block d-md-table table-hover table-bordered font-weight-bold text-black-50">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Session</th>
+                                        <th>Date</th>
+                                        <th>Last Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for i in exam %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td><a href="{% url 'exam:exam-details' i.slug %}" class="card-link"
+                                                   data-toggle="tooltip" title="Open">{{ i.name }}</a></td>
+                                            <td>{{ i.start_date.year }}</td>
+                                            <td>{{ i.start_date }}</td>
+                                            <td>{{ i.end_date }}</td>
+                                            <td><span class="label label-info">{{ i.status }}</span></td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-header text-white-50 font-weight-bolder text-center"
+                                 style="background-color: #525965">Subjects
+                            </div>
+                            <div class="card-body">
+                                <div id="id_subject">
+                                    <ul class="list-group">
+                                        <a class="card-link" data-toggle="collapse" href="#id_cs">
+                                            <li class="list-group-item list-group-item-action text-center">
+                                                <strong>Computer Science</strong>
+                                            </li>
+                                        </a>
+
+                                        <div id="id_cs" class="collapse" data-parent="#id_subject">
+                                            {% for subject in subjects|applied_science_subject:'CS' %}
+                                                <li class="list-group-item rounded mb-1">
+                                                    {{ subject }}
+                                                </li>
+                                            {% empty %}
+                                                <li class="list-group-item rounded mb-1 mt-1 list-group-item-danger">
+                                                    Not Uploaded
+                                                </li>
+                                            {% endfor %}
+                                        </div>
+                                    </ul>
+                                    <ul class="list-group">
+                                        <a class="card-link collapsed" data-toggle="collapse" href="#id_civil">
+                                            <li class="list-group-item list-group-item-action text-center">
+                                                <strong>Civil Engineering</strong>
+                                            </li>
+                                        </a>
+
+                                        <div id="id_civil" class="collapse" data-parent="#id_subject">
+                                            {% for subject in subjects|applied_science_subject:'Civil' %}
+                                                <li class="list-group-item rounded mb-1 mt-1">
+                                                    {{ subject }}
+                                                </li>
+                                            {% empty %}
+                                                <li class="list-group-item rounded mb-1 mt-1 list-group-item-danger">
+                                                    Not Uploaded
+                                                </li>
+                                            {% endfor %}
+                                        </div>
+                                    </ul>
+                                    <ul class="list-group">
+                                        <a class="card-link collapsed" data-toggle="collapse" href="#id_ec">
+                                            <li class="list-group-item list-group-item-action text-center">
+                                                <strong>Electronic & Communication</strong>
+                                            </li>
+                                        </a>
+
+                                        <div id="id_ec" class="collapse" data-parent="#id_subject">
+                                            {% for subject in subjects|applied_science_subject:'EC' %}
+                                                <li class="list-group-item rounded mb-1 mt-1">
+                                                    {{ subject }}
+                                                </li>
+                                            {% empty %}
+                                                <li class="list-group-item rounded mb-1 mt-1 list-group-item-danger">
+                                                    Not Uploaded
+                                                </li>
+                                            {% endfor %}
+                                        </div>
+                                    </ul>
+
+                                    <ul class="list-group">
+                                        <a class="card-link collapsed" data-toggle="collapse" href="#id_ee">
+                                            <li class="list-group-item list-group-item-action text-center">
+                                                <strong>Electrical Engineering</strong>
+                                            </li>
+                                        </a>
+
+                                        <div id="id_ee" class="collapse" data-parent="#id_subject">
+                                            {% for subject in subjects|applied_science_subject:'EE' %}
+                                                <li class="list-group-item rounded mb-1 mt-1">
+                                                    {{ subject }}
+                                                </li>
+                                            {% empty %}
+                                                <li class="list-group-item rounded mb-1 mt-1 list-group-item-danger">
+                                                    Not Uploaded
+                                                </li>
+                                            {% endfor %}
+                                        </div>
+                                    </ul>
+                                    <ul class="list-group">
+                                        <a class="card-link collapsed" data-toggle="collapse" href="#id_me">
+                                            <li class="list-group-item list-group-item-action text-center">
+                                                <strong>Mechanical Engineering</strong>
+                                            </li>
+                                        </a>
+
+                                        <div id="id_me" class="collapse" data-parent="#id_subject">
+                                            {% for subject in subjects|applied_science_subject:'ME' %}
+                                                <li class="list-group-item rounded mb-1 mt-1">
+                                                    {{ subject }}
+                                                </li>
+                                            {% empty %}
+                                                <li class="list-group-item rounded mb-1 mt-1 list-group-item-danger">
+                                                    Not Uploaded
+                                                </li>
+                                            {% endfor %}
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+{% endblock %}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="icon" href="{% static 'image/favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+    {% block header %}{% endblock %}
+</head>
+<body>
+{% if messages %}
+{% for message in messages %}
+{% if message.tags == 'error' %}
+<div class="alert alert-danger text-center alert-dismissible">
+    {% else %}
+    <div class="alert text-center alert-{{ message.tags }} alert-dismissible">
+        {% endif %}
+
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>{{ message.tags }} !</strong> {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% block body %}
+</div>
+</body>
+</html>{% endblock %}

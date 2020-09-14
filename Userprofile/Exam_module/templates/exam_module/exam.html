@@ -1,0 +1,337 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load extra_filters %}
+{% block head %}
+    <style>
+        div.sticky {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 60px;
+            right: 0;
+        }
+
+    </style>{% endblock %}
+{% block body %}
+    <nav class="navbar navbar-light bg-white sticky-top">
+        <a href="#" class="navbar-brand">{{ question_paper.subject }}</a>
+        <span class="h5 text-white badge-pill bg-success" id="demo"></span>
+    </nav>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card sticky">
+                    <div class="card-body">
+                        <div class="h5 text-center">{{ question_paper.exam.name }}</div>
+                        <div class="h7">{{ question_paper.subject }}</div>
+                        <div class="h7 text-muted">{{ question_paper.exam.start_date }}</div>
+                    </div>
+                    <hr>
+                    <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="text-muted text-center">Instructions</div>
+                        <span class="h6 mr-2">Click on <strong>Save</strong> to save answer</span><br>
+                        <span class="h6 mr-2"><span class="badge badge-pill badge-primary">0</span> - not answered</span><br>
+                        <span class="h6 mr-2"><span class="badge badge-pill badge-success">0</span> - answered</span>
+
+                    </li>
+                        <li class="list-group-item">
+                            <div class="text-muted text-center">Question Sitemap</div>
+                            <!--MCQ -->
+                            <p class="nav-tabs">
+                                <span class="h6 text-center mr-2">MCQ</span>
+                                {% for que in question_paper.questions.all|get_question:'MCQ' %}
+                                    <a href="#mcq_{{ forloop.counter }}" class="badge badge-pill badge-primary"
+                                       id="map_mcq_{{ forloop.counter }}">
+                                        {{ forloop.counter }}
+                                    </a>
+                                {% empty %}
+                                {% endfor %}
+                            </p>
+
+                            <!--Short -->
+                            <p class="nav-tabs">
+                                <span class="h6 text-center mr-2">Short</span>
+                                {% for que in question_paper.questions.all|get_question:'Short' %}
+                                    <a href="#short_{{ forloop.counter }}" class="badge badge-pill badge-primary"
+                                       id="map_short_{{ forloop.counter }}">
+                                        {{ forloop.counter }}
+                                    </a>
+                                {% empty %}
+                                {% endfor %}
+                            </p>
+
+                            <!--Long -->
+                            <p class="nav-tabs">
+                                <span class="h6 text-center mr-2">Long</span>
+                                {% for que in question_paper.questions.all|get_question:'Long' %}
+                                    <a href="#long_{{ forloop.counter }}" class="badge badge-pill badge-primary"
+                                       id="map_long_{{ forloop.counter }}">
+                                        {{ forloop.counter }}
+                                    </a>
+                                {% empty %}
+                                {% endfor %}
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+
+                <div class="card" id="#que_">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="mr-2">
+                                    <h4 class="badge badge-dark">
+                                        Section A
+                                    </h4>
+                                </div>
+                                <div class="ml-2">
+                                    <div class="h5 m-0">Multiple Choice Questions</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="h7 text-muted">Attempt all questions</div>
+                    </div>
+                    {% for question in question_paper.questions.all|get_question:'MCQ' %}
+                        <div class="card-body">
+                            <h5 id="mcq_{{ forloop.counter }}" class="card-title">
+                                <span class="text-black-50">{{ forloop.counter }}) </span> {{ question.question }}
+                                <span class="float-right badge badge-warning">{{ question.max_marks }}</span>
+                            </h5>
+
+                            <p class="card-text">
+                            <form method="post" autocomplete="off">
+                                {% csrf_token %}
+                                <input type="hidden" name="paper_id" value="{{ question_paper.id }}">
+                                <input type="hidden" name="question_id" value="{{ question.id }}">
+                                <ul class="form-group list-group">
+                                    <li class="list-group-item">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="answer"
+                                                   id="option-a" value="{{ question.a }}">
+                                            <label class="form-check-label" for="option-a">
+                                                {{ question.a }}
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="answer"
+                                                   id="option-b" value="{{ question.b }}">
+                                            <label class="form-check-label" for="option-b">
+                                                {{ question.b }}
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="answer"
+                                                   id="option-c" value="{{ question.c }}">
+                                            <label class="form-check-label" for="option-c">
+                                                {{ question.c }}
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="answer"
+                                                   id="option-d" value="{{ question.d }}">
+                                            <label class="form-check-label" for="option-d">
+                                                {{ question.d }}
+                                            </label>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="card-footer">
+                                    <button type="button" id="MCQsubmitResponse{{ forloop.counter }}"
+                                            class="btn btn-primary"
+                                            onclick="sub('MCQsubmitResponse', 'mcq', '{{ forloop.counter }}')">
+                                        Save
+                                    </button>
+                                </div>
+                            </form>
+                            </p>
+                        </div>
+                    {% endfor %}
+
+                </div>
+                <!-- Post /////-->
+                <div class="card" id="short">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="mr-2">
+                                    <h4 class="badge badge-dark">
+                                        Section B
+                                    </h4>
+                                </div>
+                                <div class="ml-2">
+                                    <div class="h5 m-0">Short Questions</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="h7 text-muted">Attempt 5 questions</div>
+                    </div>
+                    {% for question in question_paper.questions.all|get_question:'Short' %}
+                        <div class="card-body">
+                            <h5 id="short_{{ forloop.counter }}" class="card-title">
+                                <span class="text-black-50">{{ forloop.counter }}) </span> {{ question.question }}
+                                <span class="float-right badge badge-warning">{{ question.max_marks }}</span>
+                            </h5>
+
+                            <p class="card-text">
+                            <form method="post" autocomplete="off">
+                                {% csrf_token %}
+                                <textarea class="form-control" name="answer" rows="4"></textarea>
+                                <input type="hidden" name="paper_id" value="{{ question_paper.id }}">
+                                <input type="hidden" name="question_id" value="{{ question.id }}">
+                                <div class="card-footer">
+                                    <button type="button" id="ShortsubmitResponse{{ forloop.counter }}"
+                                            class="btn btn-primary"
+                                            onclick="sub('ShortsubmitResponse', 'short', '{{ forloop.counter }}')">
+                                        Save
+                                    </button>
+                                </div>
+                            </form>
+                            </p>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="card" id="long">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="mr-2">
+                                    <h4 class="badge badge-dark">
+                                        Section C
+                                    </h4>
+                                </div>
+                                <div class="ml-2">
+                                    <div class="h5 m-0">Long Questions</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="h7 text-muted">Attempt any 2</div>
+                    </div>
+                    {% for question in question_paper.questions.all|get_question:'Long' %}
+                        <div class="card-body">
+                            <h5 id="long_{{ forloop.counter }}" class="card-title">
+                                <span class="text-black-50">{{ forloop.counter }}) </span> {{ question.question }}
+                                <span class="float-right badge badge-warning">{{ question.max_marks }}</span>
+                            </h5>
+
+                            <p class="card-text">
+                            <form method="post" autocomplete="off">
+                                {% csrf_token %}
+                                <textarea class="form-control" name="answer" rows="4"></textarea>
+                                <input type="hidden" name="paper_id" value="{{ question_paper.id }}">
+                                <input type="hidden" name="question_id" value="{{ question.id }}">
+
+                                <div class="card-footer">
+                                    <button type="button" id="LongsubmitResponse{{ forloop.counter }}"
+                                            class="btn btn-primary"
+                                            onclick="sub('LongsubmitResponse', 'long', '{{ forloop.counter }}')">
+                                        Save
+                                    </button>
+                                </div>
+                            </form>
+                            </p>
+                        </div>
+                    {% endfor %}
+
+                </div>
+                <!-- Post /////-->
+
+
+            </div>
+            <div class="col-md-3">
+                <div class="card sticky">
+                    <div class="card-body">
+                        <img src="{{ request.session.image }}" style="width: 100%;">
+                        <h5 class="card-title">{{ request.user.get_full_name }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ user }}</h6>
+                        <p class="card-text">{{ user.dept }} - {{ user.sem }}</p>
+                        <button  class="btn btn-outline-success" onclick="self.close()">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/jquery3.5.1.min.js' %}"></script>
+    <script>
+        let countDownDate = new Date().getTime() + {{ question_paper.duration.seconds }} * 1000;
+        //
+        // Update the count down every 1 second
+        let x = setInterval(function () {
+
+            // Get today's date and time
+            var now = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            var pct = (hours * 60 * 60 + minutes * 60 + seconds) / 72;
+
+            // Display the result in the element with id="demo"
+            document.getElementById("demo").innerHTML = hours + "h "
+                + minutes + "m " + seconds + "s ";
+            $('#progress').css({"width": pct + '%', 'area-valuenow': pct});
+
+            if(minutes == 30){
+                alert('30 Minutes Left');
+            }
+
+            if(minutes == 10){
+                alert('Final 10 Minutes');
+            }
+            // If the count down is finished, write some text
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("demo").innerHTML = "EXPIRED";
+                alert('Time Up');
+                document.close()
+            }
+        }, 1000);
+    </script>
+    <script>
+        function disableF5(e) {
+            if ((e.which || e.keyCode) === 116 || (e.which || e.keyCode) === 82) {
+                e.preventDefault();
+                alert('Refresh Prohibited');
+            }
+        }
+
+        $(document).on("keydown", disableF5);
+
+        function sub(id, type, number) {
+            let form = $('#' + id + number).closest('form');
+            $.ajax({
+                url: '{% url 'exam:ajaxSubmission' %}',
+                data: form.serialize(),
+                method: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    $('#map_' + type + '_' + number).addClass('badge-success').removeClass('badge-primary');
+                }
+            })
+        }
+    </script>
+    <script>
+        window.oncontextmenu = function () {
+            alert("Not Allowed");
+            return false;
+        }
+    </script>
+
+{% endblock %}
+
+

@@ -1,0 +1,186 @@
+{% extends 'exam_module/base.html' %}
+{% block title %}Add-Question-paper{% endblock %}
+{% load static %}
+<head>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"
+          integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"
+            integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>
+</head>
+{% block body %}
+    <style>
+        body {
+            background-image: url("https://animal-wallpaper.com/wallpaper/keyboard-wallpaper-hd-For-Background-HD-Wallpaper.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.8;
+        }
+
+        h2 {
+            padding-bottom: 15px;
+            background: #435d7d;
+            color: #fff;
+            padding: 16px 30px;
+            margin: -20px -25px 10px;
+            border-radius: 3px 3px 0 0;
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+        input[type=text], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        input[type=date], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        input[type=image], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        label {
+            padding: 12px 12px 12px 0;
+            display: inline-block;
+        }
+
+
+        .container {
+            border-radius: 5px;
+            margin-top: 50px;
+            height: auto;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+
+        .col-lg-10 {
+            float: left;
+            width: 20%;
+            margin-top: 6px;
+        }
+
+        .col-lg-2 {
+            float: left;
+            width: 100%;
+            height: auto;
+            margin-top: 6px;
+        }
+
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+        @media screen and (max-width: 600px) {
+            .col-25, .col-75, input[type=submit] {
+                width: 100%;
+                margin-top: 0;
+            }
+        }
+
+    </style>
+    <div class="container">
+        <div class="card">
+            <div class="card-header bg-success text-white text-center">
+                <b>Add Question Paper</b>
+            </div>
+            <div class="card-body">
+                <p><span style="color: red"> * </span> fields are required</p>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    {{ form.source.errors }}
+                    {{ form.source }}
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-lg-2">
+                                <label for="Subject">
+                                    {{ form.subject.label_tag }}<span style="color: red">*</span>
+                                </label>
+                            </div>
+                            <div class="col-lg-10">
+                                {{ form.subject.errors }}
+                                <div class="input-group">
+                                    {{ form.subject }}
+                                    <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <a href="{% url 'exam:add-subject' %}?next={{ request.path|urlencode }}"
+                                                   data-toggle="tooltip" title="Click to add more subjects">
+                                                    <i class="fas fa-plus"></i>
+                                                </a>
+                                            </span>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-lg-2">
+                            <label for="Duration">
+                                {{ form.datetime.label_tag }}<span style="color: red">*</span>
+                            </label>
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form.datetime.errors }}
+                            {{ form.datetime }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-lg-2">
+                            <label for="Duration">
+                                {{ form.duration.label_tag }}<span style="color: red">*</span>
+                            </label>
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form.duration.errors }}
+                            {{ form.duration }}
+                        </div>
+                    </div>
+                    <div class="form-row mt-3">
+                        <div class="col-lg-2">
+                            <label for="max_marks">
+                                {{ form.max_marks.label_tag }}<span style="color: red">*</span>
+                            </label>
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form.max_marks.errors }}
+                            {{ form.max_marks }}
+                        </div>
+                    </div>
+                    <input class="btn btn-outline-success" type="submit" value="Submit">
+                    <input class="btn btn-outline-danger" type="reset" value="Reset  ">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            $("#id_datetime").datetimepicker({
+                format: 'd/m/Y H:i',
+            });
+        });
+    </script>
+{% endblock %}

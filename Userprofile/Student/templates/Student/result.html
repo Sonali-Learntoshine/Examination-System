@@ -1,0 +1,169 @@
+{% extends 'student/base.html' %}
+{% load static %}
+{% block title %}Result - {{ result.first.exam }}{% endblock %}
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/student.dashboard.css' %}">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+{% endblock %}
+{% block body %}
+    <main class="page-content">
+        <div class="container-fluid">
+            <h2>Result</h2>
+            <h4>{{ result.first.exam }}</h4>
+            <h6>Semester - {{ result.first.student.sem }}</h6>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <div class="card-header text-black-50 text-center bg-light mb-4">
+                        <div class="h4">Results</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header font-weight-bolder text-center"
+                             style="background-color: goldenrod;">
+                        </div>
+                        <div class="card-body">
+                            <div class="table">
+                                <table class="table table-responsive  w-100 d-block d-md-table" id="dataTable">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Subject</th>
+                                        <th>Code</th>
+                                        <th>Max</th>
+                                        <th>Gain</th>
+                                        <th>Viewed</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for res in result %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ res.question_paper.subject.name }}</td>
+                                        <td>{{ res.question_paper.subject.code }}</td>
+                                        <td>{{ res.question_paper.max_marks }}</td>
+                                        <td>{% if res.out %}{{ res.marks }}{% else %}--{% endif %}</td>
+                                        <td>{% if res.get_status %}
+                                            <span class="badge badge-success ">
+                                                        <i class="fa fa-check"></i>
+                                                    </span>
+                                            {% else %}
+                                            <span class="badge badge-warning ">
+                                                        <i class="fa fa-exclamation-triangle"></i>
+                                                    </span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- page-content" -->
+
+</div>
+<script>
+        function start(triggeringLink, title, time) {
+            href = triggeringLink.href;
+            var win = window.open(href, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=no, copyhistory=no, fullscreen=1');
+            win.focus();
+            win.setTimeout(function () {
+                win.close();
+            }, time * 1000);
+            return false;
+        }
+
+</script>
+<script>
+        jQuery(function ($) {
+
+            $(".sidebar-dropdown > a").click(function () {
+                $(".sidebar-submenu").slideUp(200);
+                if (
+                    $(this)
+                        .parent()
+                        .hasClass("active")
+                ) {
+                    $(".sidebar-dropdown").removeClass("active");
+                    $(this)
+                        .parent()
+                        .removeClass("active");
+                } else {
+                    $(".sidebar-dropdown").removeClass("active");
+                    $(this)
+                        .next(".sidebar-submenu")
+                        .slideDown(200);
+                    $(this)
+                        .parent()
+                        .addClass("active");
+                }
+            });
+
+            $("#close-sidebar").click(function () {
+                $(".page-wrapper").removeClass("toggled");
+            });
+            $("#show-sidebar").click(function () {
+                $(".page-wrapper").addClass("toggled");
+            });
+
+
+        });
+
+</script>
+<script>
+        $(document).ready(function () {
+            $('#id_notification').click(function (event) {
+                event.preventDefault();
+                {% for message in messages %}
+                    alert("{{ message }}");
+
+                {% empty %}
+
+                {% endfor %}
+
+            })
+        });
+
+</script>
+<script>
+        var table = $('#dataTable').DataTable({
+            ordering: true,
+            select: true,
+        })
+
+</script>
+<script>
+        $(document).ready(function () {
+            $('#id_notification').click(function (event) {
+                event.preventDefault();
+                let msg_count = {{ messages|length }}
+                {% for message in messages %}
+                    alert("{{ message }}");
+                    msg_count = msg_count - 1;
+                    $('#id_notification_bell').html(msg_count);
+                {% empty %}
+
+                {% endfor %}
+
+            })
+        });
+
+</script>
+<script>
+    if ($(window).width() < 630) {
+        $(".page-wrapper").removeClass("toggled");
+    }
+
+</script>
+{% endblock %}

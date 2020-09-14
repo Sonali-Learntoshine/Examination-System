@@ -1,0 +1,60 @@
+{% extends 'teacher/base.html' %}
+{% block title %}{{ profile }}{% endblock %}
+{% block body %}
+    <style>
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            max-width: 300px;
+            margin: auto;
+            text-align: center;
+            font-family: arial;
+        }
+
+        .title {
+            color: grey;
+            font-size: 18px;
+        }
+
+        .button {
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 8px;
+            color: white;
+            background-color: #3498DB;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+        }
+
+        p {
+            text-align: left;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        a {
+            text-decoration: none;
+            font-size: 22px;
+            color: black;
+        }
+
+        button:hover, a:hover {
+            opacity: 0.7;
+        }
+    </style>
+    {% autoescape off %}
+        <div class="card">
+            <img src="{{ profile.profile_image.url }}" alt="{{ profile.get_full_name }}" style="width:100%">
+            <br>
+            <h3><b>{{ profile.get_full_name }}</b></h3>
+            <p class="title">ID - {{ profile.user_id }}</p>
+            <p>Department - {{ profile.dept }}</p>
+            <p>Mobile - {{ profile.phone }}</p>
+            <p>Email - {{ profile.email }}</p>
+            <p>DOB - {{ profile.date_of_birth }}</p>
+            <p><a href="http://{{ domain }}/faculty/activate/{{ profile.user_id }}/" class="button">Approve</a></p>
+        </div>
+    {% endautoescape %}
+{% endblock %}

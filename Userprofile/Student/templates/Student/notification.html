@@ -1,0 +1,21 @@
+{% extends 'student/base.html' %}
+{% block title %}
+    Notifications
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-3">
+        {% for i in message_list %}
+            <div class="alert alert-success">
+                <strong>{{ i.title }} </strong>{{ i.text }}
+                {% if not i.is_viewed %}
+                    <span class="badge badge-pill badge-danger float-right mr-2">new</span>{% endif %}
+            </div>
+        {% empty %}
+            <div class="alert alert-danger">
+                <strong>NO Notifications</strong>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

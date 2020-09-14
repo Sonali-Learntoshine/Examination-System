@@ -1,0 +1,260 @@
+{% extends 'faculty/base.html' %}
+{% load static %}
+{% load extra_filters %}
+{% block title %}Response - {{ response.question_paper.subject.code }}-{{ response.student }} {% endblock %}
+{% block header %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+{% endblock %}
+{% block body %}
+    <div class="page-wrapper chiller-theme toggled">
+        {% include 'module/navbar.html' %}
+        <main class="page-content">
+            <div class="container-fluid">
+                <h2>{{ exam }}</h2>
+                <hr>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card-box">
+                            <h5 class="header-title mb-3 text-center">
+                                {{ response.exam }} - {{ response.question_paper.subject.code }}
+                                - {{ response.student }}
+                            </h5>
+
+                            <!-- MCQ -->
+                            <div class="card mb-2" id="MCQ">
+                                <div class="card-header">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="mr-2"><h4 class="badge badge-dark">Section A</h4></div>
+                                            <div class="ml-2">
+                                                <div class="h5 m-0">Multiple Choice Questions</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="list-group">
+                                        {% for question in response.question_paper.questions.all|get_question:'MCQ' %}
+                                            <div class="card mb-2">
+                                                <div class="font-weight-bolder card-header">
+                                                    <span class="text-black-50">{{ forloop.counter }}) </span>{{ question }}
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-lg">
+                                                            <li class="list-group-item mb-2">
+                                                                a) {{ question.a }}
+                                                            </li>
+                                                        </div>
+                                                        <div class="col-lg">
+                                                            <li class="list-group-item">
+                                                                b) {{ question.b }}
+                                                            </li>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-2">
+                                                        <div class="col-lg">
+                                                            <li class="list-group-item mb-2">
+                                                                c) {{ question.c }}
+                                                            </li>
+                                                        </div>
+                                                        <div class="col-lg">
+                                                            <li class="list-group-item">
+                                                                d) {{ question.d }}
+                                                            </li>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-2">
+                                                        <div class="col-md-2 ">Correct Answer</div>
+                                                        <div class="col-md-10">
+                                                            <input class="form-control" disabled
+                                                                   value="{{ question.answer }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-2">
+                                                        <div class="col-md-2 ">Selected</div>
+                                                        <div class="col-md-10">
+                                                            <input class="form-control" disabled
+                                                                   value="{{ question|get_response:response }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-2">
+                                                        <div class="col-md-2 ">Marks</div>
+                                                        <div class="col-md-10">
+                                                            <div class="input-group mb-2 mr-sm-2">
+                                                                <form method="post" class="form-inline"
+                                                                      id="mcq_{{ forloop.counter }}">
+                                                                    {% csrf_token %}
+                                                                    <input type="hidden" name="q_id" value="{{ question.id }}">
+                                                                    <input type="hidden" name="qp_id" value="{{ response.question_paper.id }}">
+                                                                    <input type="hidden" name="username" value="{{ response.student.username }}">
+
+                                                                    <input type="text" class="form-control"
+                                                                           placeholder="Marks" name="marks"
+                                                                           value="{% if  question|get_response:response  == question.answer and question.answer != '' %}{{ question.max_marks }}{% else %}0{% endif %}" onfocusout="save_marks(this, 'mcq', '{{ forloop.counter }}'); return false">
+                                                                    <div class="input-group-append">
+                                                                        <div class="input-group-text">
+                                                                            /{{ question.max_marks }}</div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Short -->
+                            <div class="card mb-2" id="short">
+                                <div class="card-header">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="mr-2"><h4 class="badge badge-dark">Section B</h4></div>
+                                            <div class="ml-2">
+                                                <div class="h5 m-0">Short Questions</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="list-group">
+                                        {% for question in response.question_paper.questions.all|get_question:'Short' %}
+                                            <div class="card mb-2">
+                                                <div class="font-weight-bolder card-header">
+                                                    <span class="text-black-50">{{ forloop.counter }}) </span>{{ question }}
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row mt-2">
+                                                        <div class="col-md-2 ">Answer</div>
+                                                        <div class="col-md-10">
+                                                            <textarea class="form-control" rows="10"
+                                                                      disabled>{{ question|get_response:response }}</textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-2">
+                                                        <div class="col-md-2 ">Marks</div>
+                                                        <div class="col-md-10">
+                                                            <div class="input-group mb-2 mr-sm-2">
+                                                                <form method="post" class="form-inline"
+                                                                      id="short_{{ forloop.counter }}">
+                                                                    {% csrf_token %}
+                                                                    <input type="hidden" name="q_id" value="{{ question.id }}">
+                                                                    <input type="hidden" name="qp_id" value="{{ response.question_paper.id }}">
+                                                                    <input type="hidden" name="username" value="{{ response.student.username }}">
+
+                                                                    <input type="text" class="form-control"
+                                                                           placeholder="Marks" name="marks"
+                                                                           value="{% if  question|get_response:response  == question.answer and question.answer != '' %}{{ question.max_marks }}{% else %}0{% endif %}" onfocusout="save_marks(this, 'short', '{{ forloop.counter }}'); return false">
+                                                                    <div class="input-group-append">
+                                                                        <div class="input-group-text">
+                                                                            /{{ question.max_marks }}</div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Long -->
+                            <div class="card mb-2" id="long">
+                                <div class="card-header">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="mr-2"><h4 class="badge badge-dark">Section C</h4></div>
+                                            <div class="ml-2">
+                                                <div class="h5 m-0">Long Questions</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="list-group">
+                                        {% for question in response.question_paper.questions.all|get_question:'Long' %}
+                                            <div class="card mb-2">
+                                                <div class="font-weight-bolder card-header">
+                                                    <span class="text-black-50">{{ forloop.counter }}) </span>{{ question }}
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row mt-2">
+                                                        <div class="col-md-2 ">Answer</div>
+                                                        <div class="col-md-10">
+                                                            <textarea class="form-control" rows="10" disabled>{{ question|get_response:response }}</textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-2">
+                                                        <div class="col-md-2 ">Marks</div>
+                                                        <div class="col-md-10">
+                                                            <div class="input-group mb-2 mr-sm-2">
+                                                                <form method="post" class="form-inline"
+                                                                      id="long_{{ forloop.counter }}">
+                                                                    {% csrf_token %}
+                                                                    <input type="hidden" name="q_id" value="{{ question.id }}">
+                                                                    <input type="hidden" name="qp_id" value="{{ response.question_paper.id }}">
+                                                                    <input type="hidden" name="username" value="{{ response.student.username }}">
+                                                                    <input type="text" class="form-control"
+                                                                           placeholder="Marks" name="marks"
+                                                                           value="{% if  question|get_response:response  == question.answer and question.answer != '' %}{{ question.max_marks }}{% else %}0{% endif %}"
+                                                                    onfocusout="save_marks(this, 'long', '{{ forloop.counter }}'); return false;">
+                                                                    <div class="input-group-append">
+                                                                        <div class="input-group-text">
+                                                                            /{{ question.max_marks }}</div>
+                                                                    </div>
+
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <a href="{% url 'exam:save-result' response.exam.id response.student.username response.question_paper.id %}"><button class="btn btn-outline-success">Save</button></a>
+                </div>
+            </div>
+        </main>
+        <!-- page-content" -->
+    </div>
+    <script>
+        $(document).ready(
+            function () {
+                $('[data-toggle="tooltip"]').tooltip();
+
+            });
+    </script>
+    <script>
+        function save_marks(triggeringLink, type, id) {
+            let form = $('#' + type + '_' + id).closest('form');
+            $.ajax({
+                url: '{% url 'exam:ajax-save-marks'%}',
+                data: form.serialize(),
+                method: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    if(data.data === 'Success') {
+                        $(triggeringLink).addClass('btn-success').removeClass('btn-danger');
+                    }else {
+                     $(triggeringLink).addClass('btn-danger').removeClass('btn-success');
+                    }
+                }
+            });
+        }
+    </script>
+{% endblock %}

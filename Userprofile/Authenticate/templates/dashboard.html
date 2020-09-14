@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        body {
+            color: #566787;
+            font-family: 'Varela Round', sans-serif;
+            font-size: 13px;
+            background-image: url("https://animal-wallpaper.com/wallpaper/keyboard-wallpaper-hd-For-Background-HD-Wallpaper.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.8;
+        }
+
+        .container-fluid {
+            background-color: whitesmoke;
+            margin-top: 200px;
+            display: inline-block;
+            text-align: center;
+            width: 300px;
+            height: 300px;
+            padding-top: 40px;
+            color: black;
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            border-radius: 15px 50px 30px;
+        }
+
+        #box1 {
+            float: left;
+            margin-left: 25%;
+        }
+
+        #box2 {
+            float: right;
+            margin-right: 25%;
+        }
+
+
+        .container-fluid:hover {
+            box-shadow: 5px 5px 10px 10px;
+            color: #35312A;
+        }
+
+
+        .container-fluid a:hover {
+            text-decoration: none;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<a href="{% url 'student:login' %}">
+    <div class="container-fluid" id="box2">
+        <h3><img src="{% static 'home/images/avtar2.png' %}" class="avatar" style="height: 100px;width: 80px">
+        </h3>
+        <h1><b>Student</b></h1>
+    </div>
+</a>
+
+<a href="{% url 'teacher:login' %}">
+    <div class="container-fluid" id="box1">
+        <h3><img src="{% static 'home/images/avtar1.png' %}" class="avatar" style="height: 100px;width: 80px">
+
+            {# <h3><i class="fa fa-lock fa-4x"></i></h3>   #}
+            <h1><b><i>Teacher</i></b></h1></h3>
+    </div>
+</a>
+
+</body>
+</html>

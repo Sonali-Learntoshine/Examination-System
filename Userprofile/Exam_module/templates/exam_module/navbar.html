@@ -1,0 +1,109 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/student.dashboard.css' %}">
+<a id="show-sidebar" class="btn btn-sm btn-dark" href="#"><i class="fas fa-bars"></i></a>
+<nav id="sidebar" class="sidebar-wrapper">
+    <div class="sidebar-content">
+        <div class="sidebar-brand">
+            <a href="/">KIPM - Online Examination System</a>
+            <div id="close-sidebar">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+
+        <div class="sidebar-header">
+            <div class="user-pic">
+                <img class="img-responsive img-rounded" src="{{ request.session.image }}" alt="User picture">
+            </div>
+            <div class="user-info">
+                <span class="user-name">{{ user.first_name }} <strong>{{ user.last_name }}</strong></span>
+                {% if user.designation %}
+                    <span class="user-role">{{ user.designation }} [{{ user.dept }}]</span>
+                {% endif %}
+
+
+                <span class="user-role">{{ user }}</span>
+                <span class="user-status"><i class="fa fa-circle"></i><span>Online</span></span>
+
+            </div>
+        </div>
+
+        <div class="sidebar-menu">
+            <ul>
+                <li class="header-menu">
+                    <span>General</span>
+                </li>
+                <li>
+                    <a href="{% url 'teacher:dashboard' user.username %}">
+                        <i class="fa fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-envelope"></i>
+                        <span>Notifications</span>
+                        <span class="badge badge-pill badge-danger">{{ notification|length }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'teacher:profile' user.username %}">
+                        <i class="far fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- sidebar-menu  -->
+    </div>
+    <!-- sidebar-content  -->
+    <div class="sidebar-footer">
+        <a href="{% url 'teacher:profile' user.username %}">
+            <i class="fa fa-cog"></i>
+            <span class="badge-sonar"></span>
+        </a>
+        <a href="{% url 'teacher:logout' %}">
+            <i class="fa fa-power-off"></i>
+        </a>
+    </div>
+</nav>
+
+<script>
+    jQuery(function ($) {
+
+        $(".sidebar-dropdown > a").click(function () {
+            $(".sidebar-submenu").slideUp(200);
+            if (
+                $(this)
+                    .parent()
+                    .hasClass("active")
+            ) {
+                $(".sidebar-dropdown").removeClass("active");
+                $(this)
+                    .parent()
+                    .removeClass("active");
+            } else {
+                $(".sidebar-dropdown").removeClass("active");
+                $(this)
+                    .next(".sidebar-submenu")
+                    .slideDown(200);
+                $(this)
+                    .parent()
+                    .addClass("active");
+            }
+        });
+
+        $("#close-sidebar").click(function () {
+            $(".page-wrapper").removeClass("toggled");
+        });
+        $("#show-sidebar").click(function () {
+            $(".page-wrapper").addClass("toggled");
+        });
+
+    });
+</script>
+
+<script>
+    if ($(window).width() < 630) {
+        $(".page-wrapper").removeClass("toggled");
+    }
+</script>

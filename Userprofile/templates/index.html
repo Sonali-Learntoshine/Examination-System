@@ -1,0 +1,642 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>CYK | Home</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/konpa/devicon@master/devicon.min.css">
+    <link rel="icon" type="image/x-icon" href="{% static 'home/assets/img/favicon.ico' %}"/>
+    <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet"
+          type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;lang=en"/>
+
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{% static 'home/css/styles.css' %}" rel="stylesheet"/>
+</head>
+<body id="page-top">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top" style="font-family:'Gabriola';font-size: 30px;">Check
+            Your Knowledge</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">Menu
+            <i class="fas fa-bars ml-1"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ml-auto">
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#services">Courses</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#team">Team</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contact</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'dashboard' %}">Register</a>
+                </li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'dashboard' %}">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Masthead-->
+<header class="masthead">
+    <div class="container">
+        <div class="masthead-subheading">Mistakes are proof that</div>
+        <div class="masthead-heading text-uppercase">You're TRYING.</div>
+        <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Tell Me More</a>
+    </div>
+</header>
+<!-- Services-->
+<section class="page-section" id="services">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Courses</h2>
+            <h3 class="section-subheading text-muted">The courses we offer <a href="#" style="text-decoration: unset">
+                view all</a></h3>
+        </div>
+        <div class="row text-center">
+            <div class="col-md-4">
+                        <span class="fa-stack fa-4x">
+                            <i class="devicon-c-line colored" style="font-size: 10rem"></i>
+                        </span>
+                <h4 class="my-3">C Programming</h4>
+                <p class="text-muted">C is a general-purpose, procedural computer programming language supporting
+                    structured programming, lexical variable scope, and recursion, with a static type system.</p>
+            </div>
+            <div class="col-md-4">
+                        <span class="fa-stack fa-4x">
+                        <i class="devicon-cplusplus-plain colored" style="font-size: 10rem"></i>
+                        </span>
+                <h4 class="my-3">C++</h4>
+                <p class="text-muted">C++ is a powerful general-purpose programming language. It can be used to develop
+                    operating systems, browsers, games, and so on.</p>
+            </div>
+            <div class="col-md-4">
+                        <span class="fa-stack fa-4x">
+                        <i class="devicon-java-plain colored" style="font-size: 10rem"></i>
+                        </span>
+                <h4 class="my-3">Java</h4>
+                <p class="text-muted">Java is a general-purpose programming language that is class-based and
+                    object-oriented, and designed to have as few implementation dependencies as possible.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-4">
+                        <span class="fa-stack fa-4x">
+                            <i class="devicon-python-plain colored" style="font-size: 10rem"></i>
+                        </span>
+                <h4 class="my-3">Python</h4>
+                <p class="text-muted">Python is an interpreted, high-level, general-purpose programming language.
+                    Created by Guido van Rossum and first released in 1991. </p>
+            </div>
+            <div class="col-md-4">
+                        <span class="fa-stack fa-4x">
+                         <i class="devicon-django-plain-wordmark colored" style="font-size: 10rem"></i>
+                        </span>
+                <h4 class="my-3">Django</h4>
+                <p class="text-muted">Django is a Python-based free and open-source web framework that follows the
+                    model-template-view architectural pattern. It is maintained by the Django Software Foundation.</p>
+            </div>
+            <div class="col-md-4">
+                        <span class="fa-stack fa-4x">
+                             <i class="devicon-php-plain colored" style="font-size: 10rem"></i>
+                        </span>
+                <h4 class="my-3">Php</h4>
+                <p class="text-muted">PHP is a popular general-purpose scripting language that is especially suited to
+                    web development. It was originally created by Danish-Canadian programmer Rasmus Lerdorf in 1994.</p>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!-- Portfolio Grid-->
+<section class="page-section bg-light" id="portfolio">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Portfolio</h2>
+            <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <div class="portfolio-item">
+                    <a class="portfolio-link" data-toggle="modal" href="#portfolioModal1">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <img class="img-fluid"
+                             src=https://images.all-free-download.com/images/graphiclarge/students_03_hd_pictures_168120.jpg
+                             alt=""/>
+                    </a>
+                    <div class="portfolio-caption">
+                        <div class="portfolio-caption-heading">Threads</div>
+                        <div class="portfolio-caption-subheading text-muted">Illustration</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <div class="portfolio-item">
+                    <a class="portfolio-link" data-toggle="modal" href="#portfolioModal2">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <img class="img-fluid"
+                             src=https://freedesignfile.com/upload/2017/04/Homework-students-HD-picture.jpg alt=""/>
+                    </a>
+                    <div class="portfolio-caption">
+                        <div class="portfolio-caption-heading">Explore</div>
+                        <div class="portfolio-caption-subheading text-muted">Graphic Design</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <div class="portfolio-item">
+                    <a class="portfolio-link" data-toggle="modal" href="#portfolioModal3">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <img class="img-fluid" src=https://wallpaperaccess.com/full/1644067.jpg alt=""/>
+                    </a>
+                    <div class="portfolio-caption">
+                        <div class="portfolio-caption-heading">Finish</div>
+                        <div class="portfolio-caption-subheading text-muted">Identity</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
+                <div class="portfolio-item">
+                    <a class="portfolio-link" data-toggle="modal" href="#portfolioModal4">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <img class="img-fluid" src=https://cdn.hipwallpaper.com/i/1/65/dQs4O6.jpg alt=""/>
+                    </a>
+                    <div class="portfolio-caption">
+                        <div class="portfolio-caption-heading">Lines</div>
+                        <div class="portfolio-caption-subheading text-muted">Branding</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-4 mb-sm-0">
+                <div class="portfolio-item">
+                    <a class="portfolio-link" data-toggle="modal" href="#portfolioModal5">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <img class="img-fluid" src=https://wallpapercave.com/wp/wp1838778.jpg alt=""/>
+                    </a>
+                    <div class="portfolio-caption">
+                        <div class="portfolio-caption-heading">Southwest</div>
+                        <div class="portfolio-caption-subheading text-muted">Website Design</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="portfolio-item">
+                    <a class="portfolio-link" data-toggle="modal" href="#portfolioModal6">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <img class="img-fluid"
+                             src=https://images.all-free-download.com/images/graphiclarge/students_05_hd_pictures_168119.jpg
+                             alt=""/>
+                    </a>
+                    <div class="portfolio-caption">
+                        <div class="portfolio-caption-heading">Window</div>
+                        <div class="portfolio-caption-subheading text-muted">Photography</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- About-->
+<section class="page-section" id="about">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">About</h2>
+            <h3 class="section-subheading text-muted">Our motivation level enhances from yours.</h3>
+        </div>
+        <ul class="timeline">
+            <li>
+                <div class="timeline-image"><img class="rounded-circle img-fluid"
+                                                 src=https://image.freepik.com/free-vector/level-up-neon-signs-style-text_118419-1632.jpg
+                                                 alt=""/></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4>Upgrading skills</h4>
+                        <h4 class="subheading">Your growth is our responsibility</h4>
+                    </div>
+                    <div class="timeline-body"><p class="text-muted">Your talents and skills are indispensable for
+                        us.</p></div>
+                </div>
+            </li>
+            <li class="timeline-inverted">
+                <div class="timeline-image"><img class="rounded-circle img-fluid"
+                                                 src=https://pluspng.com/img-png/software-developer-png-computer-software-engineer-320.png
+                                                 alt=""/></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4>Faculties</h4>
+                        <h4 class="subheading">Our heros</h4>
+                    </div>
+                    <div class="timeline-body"><p class="text-muted">We have the best faculties members who are
+                        responsible for conducting exams and managing students related issues.</p></div>
+                </div>
+            </li>
+            <li>
+                <div class="timeline-image"><img class="rounded-circle img-fluid"
+                                                 src=https://friendlystock.com/wp-content/uploads/2019/02/5-male-writing-teacher-cartoon-clipart.jpg
+                                                 style="height: 155px; width: 210px" alt=""/></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4>Students</h4>
+                        <h4 class="subheading">Future of our society</h4>
+                    </div>
+                    <div class="timeline-body"><p class="text-muted">The only thing to be shared for our students is <i>"If
+                        you don't step forward, you're always in the
+                        same place.” “Believe in yourself and all that you are. Know that there is something inside you
+                        that is greater than any obstacle.” “There are far, far better things ahead than any we leave
+                        behind.”</i></p></div>
+                </div>
+            </li>
+            <li class="timeline-inverted">
+                <div class="timeline-image"><img class="rounded-circle img-fluid"
+                                                 src=https://blog.unifiedmanufacturing.com/wp-content/uploads/2010/06/try-hard1.jpg
+                                                 alt=""/></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4 class="subheading">Our believes</h4>
+                    </div>
+                    <div class="timeline-body"><p class="text-muted">Never Give up. Today is hard, tommorrow will be
+                        worse, but the day after tomorrow wiil be sunshine.</p></div>
+                </div>
+            </li>
+            <li class="timeline-inverted" style="size: 40px">
+                <div class="timeline-image">
+                    <p style="font-size: 5px">
+                        A journey of a thousand
+                        <br/>
+                        miles must begin with
+                        <br/>
+                        a single STEP.
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</section>
+<!-- Team-->
+<section class="page-section bg-light" id="team">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Our Amazing Team</h2>
+            <h3 class="section-subheading text-muted">Our great team members</h3>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="team-member">
+                    <img class="mx-auto rounded-circle" src="{% static 'home/assets/img/team/1.jpg' %}" alt=""/>
+                    <h4>Kay Garland</h4>
+                    <p class="text-muted">Developer</p>
+                    <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="team-member">
+                    <img class="mx-auto rounded-circle" src="{% static 'home/assets/img/team/2.jpg' %}" alt=""/>
+                    <h4>Larry Parker</h4>
+                    <p class="text-muted">Designer</p>
+                    <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="team-member">
+                    <img class="mx-auto rounded-circle" src="{% static 'home/assets/img/team/3.jpg' %}" alt=""/>
+                    <h4>Diana Petersen</h4>
+                    <p class="text-muted">Lead Developer</p>
+                    <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center"><p class="large text-muted">"Teamwork is the ability to work
+                together toward a common vision. The ability to direct individual accomplishments toward organizational
+                objectives. It is the fuel that allows common people to attain uncommon results."</p></div>
+        </div>
+    </div>
+</section>
+<!-- Clients-->
+<div class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 mx-auto text-center"><p class="large text-muted" style="font-size: 30px">“Positive
+                thinking is powerful
+                thinking. If you want happiness, fulfillment, success and inner peace,
+                start thinking you have the power to achieve those things. Focus on the bright side of life and expect
+                positive results.” </p>
+            </div>
+        </div>
+    </div>
+    <!-- Contact-->
+    <section class="page-section" id="contact">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Contact Us</h2>
+                <h3 class="section-subheading text-muted">Contact if you have any issue or query</h3>
+            </div>
+            <form method="post" action="" id="contactForm" name="sentMessage" novalidate="novalidate">
+                {% csrf_token %}
+                <div class="row align-items-stretch mb-5">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input class="form-control" id="name" type="text" placeholder="Your Name *"
+                                   required="required" name="username"
+                                   data-validation-required-message="Please enter your name."/>
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" id="email" type="email" placeholder="Your Email *"
+                                   required="required" name="email"
+                                   data-validation-required-message="Please enter your email address."/>
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="form-group mb-md-0">
+                            <input class="form-control" id="phone" type="tel" placeholder="Your Phone *"
+                                   required="required" name="phone"
+                                   data-validation-required-message="Please enter your phone number."/>
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-textarea mb-md-0">
+                        <textarea class="form-control" id="message" placeholder="Your Message *" required="required"
+                                  name="mess"
+                                  data-validation-required-message="Please enter a message."></textarea>
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div id="success"></div>
+                    <button class="btn btn-primary btn-xl text-uppercase" id="sendMessageButton" type="submit">Send
+                        Message
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+    <!-- Footer-->
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-4 text-lg-left">Created by- Sonali</div>
+                <div class="col-lg-4 my-3 my-lg-0">
+                    <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+                <div class="col-lg-4 text-lg-right">
+                    <a class="mr-3" href="#"><b style="font-size: 25px">Check Your Knowledge</b></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Portfolio Modals-->
+    <!-- Modal 1-->
+    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-dismiss="modal"><img src="{% static 'home/assets/img/close-icon.svg' %}"
+                                                                   alt="Close modal"/></div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="modal-body">
+                                <!-- Project Details Go Here-->
+                                <h2 class="text-uppercase">Project Name</h2>
+                                <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                <img class="img-fluid d-block mx-auto"
+                                     src="{% static 'home/assets/img/portfolio/01-full.jpg' %}" alt=""/>
+                                <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur
+                                    adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt
+                                    repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae,
+                                    nostrum, reiciendis facere nemo!</p>
+                                <ul class="list-inline">
+                                    <li>Date: January 2020</li>
+                                    <li>Client: Threads</li>
+                                    <li>Category: Illustration</li>
+                                </ul>
+                                <button class="btn btn-primary" data-dismiss="modal" type="button">
+                                    <i class="fas fa-times mr-1"></i>
+                                    Close Project
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal 2-->
+    <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-dismiss="modal"><img src="{% static 'home/assets/img/close-icon.svg' %}"
+                                                                   alt="Close modal"/></div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="modal-body">
+                                <!-- Project Details Go Here-->
+                                <h2 class="text-uppercase">Project Name</h2>
+                                <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                <img class="img-fluid d-block mx-auto"
+                                     src="{% static 'home/assets/img/portfolio/02-full.jpg' %}" alt=""/>
+                                <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur
+                                    adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt
+                                    repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae,
+                                    nostrum, reiciendis facere nemo!</p>
+                                <ul class="list-inline">
+                                    <li>Date: January 2020</li>
+                                    <li>Client: Explore</li>
+                                    <li>Category: Graphic Design</li>
+                                </ul>
+                                <button class="btn btn-primary" data-dismiss="modal" type="button">
+                                    <i class="fas fa-times mr-1"></i>
+                                    Close Project
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal 3-->
+    <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-dismiss="modal"><img src="{% static 'home/assets/img/close-icon.svg' %}"
+                                                                   alt="Close modal"/></div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="modal-body">
+                                <!-- Project Details Go Here-->
+                                <h2 class="text-uppercase">Project Name</h2>
+                                <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                <img class="img-fluid d-block mx-auto"
+                                     src="{% static 'home/assets/img/portfolio/03-full.jpg' %}" alt=""/>
+                                <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur
+                                    adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt
+                                    repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae,
+                                    nostrum, reiciendis facere nemo!</p>
+                                <ul class="list-inline">
+                                    <li>Date: January 2020</li>
+                                    <li>Client: Finish</li>
+                                    <li>Category: Identity</li>
+                                </ul>
+                                <button class="btn btn-primary" data-dismiss="modal" type="button">
+                                    <i class="fas fa-times mr-1"></i>
+                                    Close Project
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal 4-->
+    <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-dismiss="modal"><img src="{% static 'home/assets/img/close-icon.svg' %}"
+                                                                   alt="Close modal"/></div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="modal-body">
+                                <!-- Project Details Go Here-->
+                                <h2 class="text-uppercase">Project Name</h2>
+                                <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                <img class="img-fluid d-block mx-auto"
+                                     src="{% static 'home/assets/img/portfolio/04-full.jpg' %}" alt=""/>
+                                <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur
+                                    adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt
+                                    repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae,
+                                    nostrum, reiciendis facere nemo!</p>
+                                <ul class="list-inline">
+                                    <li>Date: January 2020</li>
+                                    <li>Client: Lines</li>
+                                    <li>Category: Branding</li>
+                                </ul>
+                                <button class="btn btn-primary" data-dismiss="modal" type="button">
+                                    <i class="fas fa-times mr-1"></i>
+                                    Close Project
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal 5-->
+    <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-dismiss="modal"><img src="{% static 'home/assets/img/close-icon.svg' %}"
+                                                                   alt="Close modal"/></div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="modal-body">
+                                <!-- Project Details Go Here-->
+                                <h2 class="text-uppercase">Project Name</h2>
+                                <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                <img class="img-fluid d-block mx-auto"
+                                     src="{% static 'home/assets/img/portfolio/05-full.jpg' %}" alt=""/>
+                                <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur
+                                    adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt
+                                    repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae,
+                                    nostrum, reiciendis facere nemo!</p>
+                                <ul class="list-inline">
+                                    <li>Date: January 2020</li>
+                                    <li>Client: Southwest</li>
+                                    <li>Category: Website Design</li>
+                                </ul>
+                                <button class="btn btn-primary" data-dismiss="modal" type="button">
+                                    <i class="fas fa-times mr-1"></i>
+                                    Close Project
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal 6-->
+    <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-dismiss="modal"><img src="{% static 'home/assets/img/close-icon.svg' %}"
+                                                                   alt="Close modal"/></div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="modal-body">
+                                <!-- Project Details Go Here-->
+                                <h2 class="text-uppercase">Project Name</h2>
+                                <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                <img class="img-fluid d-block mx-auto"
+                                     src="{% static 'home/assets/img/portfolio/06-full.jpg' %}" alt=""/>
+                                <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur
+                                    adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt
+                                    repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae,
+                                    nostrum, reiciendis facere nemo!</p>
+                                <ul class="list-inline">
+                                    <li>Date: January 2020</li>
+                                    <li>Client: Window</li>
+                                    <li>Category: Photography</li>
+                                </ul>
+                                <button class="btn btn-primary" data-dismiss="modal" type="button">
+                                    <i class="fas fa-times mr-1"></i>
+                                    Close Project
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Bootstrap core JS-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+<!-- Third party plugin JS-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+<!-- Contact form JS-->
+<script src="{% static 'home/assets/mail/jqBootstrapValidation.js' %}"></script>
+<script src="{% static 'home/assets/mail/contact_me.js' %}"></script>
+<!-- Core theme JS-->
+<script src="{% static 'home/js/scripts.js' %}"></script>
+</body>
+</html>

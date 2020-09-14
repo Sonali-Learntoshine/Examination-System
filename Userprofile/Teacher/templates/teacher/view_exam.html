@@ -1,0 +1,487 @@
+{% load static %}
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <title>Add Student</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <!-- VENDOR CSS -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/linearicons/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/metisMenu/metisMenu.css' %}">
+    <link rel="stylesheet"
+          href="{% static 'assets/vendor/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/chartist/css/chartist.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/toastr/toastr.min.css' %}">
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+    <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+    <link rel="stylesheet" href="{% static 'assets/css/demo.css' %}">
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+    <!-- ICONS -->
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'assets/img/apple-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'assets/img/favicon.png' %}">
+
+    <style>
+        .item img {
+            height: 450px !important;
+            width: 100% !important;
+            margin-left: auto;
+        }
+
+        body {
+            background-image: url("https://animal-wallpaper.com/wallpaper/keyboard-wallpaper-hd-For-Background-HD-Wallpaper.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.8;
+        }
+
+        h2 {
+            padding-bottom: 15px;
+            background: #435d7d;
+            color: #fff;
+            padding: 16px 30px;
+            margin: -20px -25px 10px;
+            border-radius: 3px 3px 0 0;
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+        input[type=text], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        input[type=date], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        input[type=image], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        label {
+            padding: 12px 12px 12px 0;
+            display: inline-block;
+        }
+
+        input[type=submit] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+        }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        .container {
+            border-radius: 5px;
+            margin-top: 50px;
+            height: auto;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+        @media screen and (max-width: 600px) {
+            .col-25, .col-75, input[type=submit] {
+                width: 100%;
+                margin-top: 0;
+            }
+        }
+
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background-color: #9dc1d3;
+        }
+
+
+
+
+
+
+    </style>
+</head>
+
+<body>
+<!-- WRAPPER -->
+<div id="wrapper">
+    <!-- NAVBAR -->
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-btn">
+                <button type="button" class="btn-toggle-offcanvas"><i class="lnr lnr-menu"></i></button>
+            </div>
+            <!-- logo -->
+            <div class="navbar-brand">
+                <a href="{% url 'teacher:tdashboard' %}">Teacher Dashboard</a>
+            </div>
+            <!-- end logo -->
+            <div class="navbar-right">
+                <!-- search form -->
+                <form id="navbar-search" class="navbar-form search-form">
+                    <input value="" class="form-control" placeholder="Search here..." type="text">
+                    <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
+                </form>
+                <!-- end search form -->
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- END NAVBAR -->
+    <!-- LEFT SIDEBAR -->
+    <div id="left-sidebar" class="sidebar">
+        <button type="button" class="btn btn-xs btn-link btn-toggle-fullwidth">
+            <span class="sr-only">Toggle Fullwidth</span>
+            <i class="fa fa-angle-left"></i>
+        </button>
+        <div class="sidebar-scroll">
+            <div class="user-account">
+                <img src="{% static 'assets/img/2.jpg' %}" class="img-responsive img-circle user-photo"
+                     alt="User Profile Picture">
+                <div class="dropdown">
+                    <a href="#">Hello! <strong>{{ user }}
+                    </strong></a>
+                </div>
+            </div>
+            <nav id="left-sidebar-nav" class="sidebar-nav">
+                <ul id="main-menu" class="metismenu">
+                    <li class=""><a href="{% url 'teacher:tdashboard' %}"><i class="lnr lnr-home"></i>
+                        <span>Dashboard</span></a></li>
+                    <li class="">
+                        <a href="#uiElements" class="has-arrow" aria-expanded="false"><i class="lnr lnr-magic-wand"></i>
+                            <span>Add </span></a>
+                        <ul aria-expanded="true">
+                            <li class=""><a href="{% url 'teacher:add_exam' %}">Exam</a></li>
+                            <li class=""><a href="{% url 'teacher:add_question' %}">Question</a></li>
+                            <li class=""><a href="{% url 'teacher:add_student' %}">Student</a></li>
+
+                        </ul>
+                    </li>
+
+
+                    <li class="">
+                        <a href="#subPages" class="has-arrow" aria-expanded="false"><i class="lnr lnr-file-empty"></i>
+                            <span>View</span></a>
+                        <ul aria-expanded="true">
+                            <li class=""><a href="page-profile.html">Teachers</a></li>
+                            <li class=""><a href="page-login.html">Students</a></li>
+                            <li class="active"><a href="{% url 'teacher:view_exam' %}">Exam</a></li>
+                            <li class=""><a href="{% url 'teacher:view_question' %}">Questions</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="">
+                        <a href="#forms" class="has-arrow" aria-expanded="false"><i class="lnr lnr-pencil"></i> <span>Update</span></a>
+                        <ul aria-expanded="true">
+                            <li class=""><a href="#">Question</a></li>
+                        </ul>
+                    </li>
+
+
+                    <li class="">
+                        <a href="#charts" class="has-arrow" aria-expanded="false"><i class="lnr lnr-chart-bars"></i>
+                            <span>Report</span></a>
+                        <ul aria-expanded="true">
+                            <li class=""><a href="charts-chartist.html">Chartist</a></li>
+                            <li class=""><a href="charts-sparkline.html">Sparkline Chart</a></li>
+                        </ul>
+                    </li>
+
+                    <li class=""><a href="{% url 'teacher:tdashboard' %}"><i class="fa fa-lock"></i>
+                        <span>Change Password</span></a></li>
+
+                    <li class=""><a href="{% url 'logout' %}"><i class="fa fa-hand-o-right"></i>
+                        <span>Logout</span></a></li>
+
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+    <!-- END LEFT SIDEBAR -->
+    <!--MAIN CONTENT -->
+    <div id="main-content">
+        <div class="container-fluid">
+            <div class="container">
+                <h2 align="center">View Exam</h2>
+
+                {% for i in exam %}
+                <table>
+                    <tr>
+                        <td><h3><a href="{% url 'teacher:view_exam' %}{{ i.id }}">{{ i.title }}</a></h3><br></td>
+                    </tr>
+                </table>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- END MAIN CONTENT -->
+    <div class="clearfix"></div>
+    <footer>
+        -------------
+    </footer>
+</div>
+<!-- END WRAPPER -->
+<!-- Javascript -->
+<script src="{% static 'assets/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'assets/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/vendor/metisMenu/metisMenu.js' %}"></script>
+<script src="{% static 'assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js' %}"></script>
+<script src="{% static 'assets/vendor/jquery-sparkline/js/jquery.sparkline.min.js' %}"></script>
+<script src="{% static 'assets/vendor/bootstrap-progressbar/js/bootstrap-progressbar.min.js' %}"></script>
+<script src="{% static 'assets/vendor/chartist/js/chartist.min.js' %}"></script>
+<script src="{% static 'assets/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.min.js' %}"></script>
+<script src="{% static 'assets/vendor/chartist-plugin-axistitle/chartist-plugin-axistitle.min.js' %}"></script>
+<script src="{% static 'assets/vendor/chartist-plugin-legend-latest/chartist-plugin-legend.js' %}"></script>
+<script src="{% static 'assets/vendor/toastr/toastr.js' %}"></script>
+<script src="{% static 'assets/scripts/common.js' %}"></script>
+<script>
+    $(function () {
+
+        // sparkline charts
+        var sparklineNumberChart = function () {
+
+            var params = {
+                width: '140px',
+                height: '30px',
+                lineWidth: '2',
+                lineColor: '#20B2AA',
+                fillColor: false,
+                spotRadius: '2',
+                spotColor: false,
+                minSpotColor: false,
+                maxSpotColor: false,
+                disableInteraction: false
+            };
+
+            $('#number-chart1').sparkline('html', params);
+            $('#number-chart2').sparkline('html', params);
+            $('#number-chart3').sparkline('html', params);
+            $('#number-chart4').sparkline('html', params);
+        };
+
+        sparklineNumberChart();
+
+
+        // traffic sources
+        var dataPie = {
+            series: [45, 25, 30]
+        };
+
+        var labels = ['Direct', 'Organic', 'Referral'];
+        var sum = function (a, b) {
+            return a + b;
+        };
+
+        new Chartist.Pie('#demo-pie-chart', dataPie, {
+            height: "270px",
+            labelInterpolationFnc: function (value, idx) {
+                var percentage = Math.round(value / dataPie.series.reduce(sum) * 100) + '%';
+                return labels[idx] + ' (' + percentage + ')';
+            }
+        });
+
+
+        // progress bars
+        $('.progress .progress-bar').progressbar({
+            display_text: 'none'
+        });
+
+        // line chart
+        var data = {
+            labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            series: [
+                [200, 380, 350, 480, 410, 450, 550],
+            ]
+        };
+
+        var options = {
+            height: "200px",
+            showPoint: true,
+            showArea: true,
+            axisX: {
+                showGrid: false
+            },
+            lineSmooth: false,
+            chartPadding: {
+                top: 0,
+                right: 0,
+                bottom: 30,
+                left: 30
+            },
+            plugins: [
+                Chartist.plugins.tooltip({
+                    appendToBody: true
+                }),
+                Chartist.plugins.ctAxisTitle({
+                    axisX: {
+                        axisTitle: 'Day',
+                        axisClass: 'ct-axis-title',
+                        offset: {
+                            x: 0,
+                            y: 50
+                        },
+                        textAnchor: 'middle'
+                    },
+                    axisY: {
+                        axisTitle: 'Reach',
+                        axisClass: 'ct-axis-title',
+                        offset: {
+                            x: 0,
+                            y: -10
+                        },
+                    }
+                })
+            ]
+        };
+
+        new Chartist.Line('#demo-line-chart', data, options);
+
+
+        // sales performance chart
+        var sparklineSalesPerformance = function () {
+
+            var lastWeekData = [142, 164, 298, 384, 232, 269, 211];
+            var currentWeekData = [352, 267, 373, 222, 533, 111, 60];
+
+            $('#chart-sales-performance').sparkline(lastWeekData, {
+                fillColor: 'rgba(90, 90, 90, 0.1)',
+                lineColor: '#5A5A5A',
+                width: '' + $('#chart-sales-performance').innerWidth() + '',
+                height: '100px',
+                lineWidth: '2',
+                spotColor: false,
+                minSpotColor: false,
+                maxSpotColor: false,
+                chartRangeMin: 0,
+                chartRangeMax: 1000
+            });
+
+            $('#chart-sales-performance').sparkline(currentWeekData, {
+                composite: true,
+                fillColor: 'rgba(60, 137, 218, 0.1)',
+                lineColor: '#3C89DA',
+                lineWidth: '2',
+                spotColor: false,
+                minSpotColor: false,
+                maxSpotColor: false,
+                chartRangeMin: 0,
+                chartRangeMax: 1000
+            });
+        }
+
+        sparklineSalesPerformance();
+
+        var sparkResize;
+        $(window).on('resize', function () {
+            clearTimeout(sparkResize);
+            sparkResize = setTimeout(sparklineSalesPerformance, 200);
+        });
+
+
+        // top products
+        var dataStackedBar = {
+            labels: ['Q1', 'Q2', 'Q3'],
+            series: [
+                [800000, 1200000, 1400000],
+                [200000, 400000, 500000],
+                [100000, 200000, 400000]
+            ]
+        };
+
+        new Chartist.Bar('#chart-top-products', dataStackedBar, {
+            height: "250px",
+            stackBars: true,
+            axisX: {
+                showGrid: false
+            },
+            axisY: {
+                labelInterpolationFnc: function (value) {
+                    return (value / 1000) + 'k';
+                }
+            },
+            plugins: [
+                Chartist.plugins.tooltip({
+                    appendToBody: true
+                }),
+                Chartist.plugins.legend({
+                    legendNames: ['Phone', 'Laptop', 'PC']
+                })
+            ]
+        }).on('draw', function (data) {
+            if (data.type === 'bar') {
+                data.element.attr({
+                    style: 'stroke-width: 30px'
+                });
+            }
+        });
+
+
+        // notification popup
+        toastr.options.closeButton = true;
+        toastr.options.positionClass = 'toast-bottom-right';
+        toastr.options.showDuration = 1000;
+
+    });
+
+
+
+
+
+</script>
+</body>
+
+</html>

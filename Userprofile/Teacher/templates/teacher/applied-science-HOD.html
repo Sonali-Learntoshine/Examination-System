@@ -1,0 +1,333 @@
+{% extends 'faculty/base.html' %}
+{% load static %}
+{% load extra_filters %}
+{% block title %}HOD Dashboard{% endblock %}
+{% block header %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+{% endblock %}
+{% block body %}
+    <div class="page-wrapper chiller-theme toggled">
+        {% include 'module/navbar.html' %}
+        <main class="page-content">
+            <div class="container-fluid">
+                <h2>HOD Dashboard</h2>
+                <hr>
+                <div class="row">
+                    <div class="col-lg-8 mb-2">
+                        <div class="card table-responsive">
+                            <div class="card-header text-white-50 font-weight-bolder text-center"
+                                 style="background-color: #525965">Faculties
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-responsive  w-100 d-block d-md-table" id="dataTable">
+                                    <thead>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>ID</th>
+                                    <th>Designation</th>
+                                    <th>Verified</th>
+                                    <th>Controls</th>
+                                    </thead>
+                                    <tfoot>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>ID</th>
+                                    <th>Designation</th>
+                                    <th>Verified</th>
+                                    <th>Controls</th>
+                                    </tfoot>
+
+                                    <tbody>
+                                    {% for faculty in faculties %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ faculty.get_full_name }}</td>
+                                            <td>{{ faculty.user_id }}</td>
+                                            <td>{{ faculty.designation }}</td>
+                                            <td class="text-center">
+                                                {% if faculty.is_active %}
+                                                    <i class="text-success fas fa-check-circle"></i>
+                                                {% else %}
+                                                    <i class="text-danger fas fa-times-circle"></i>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-sm btn-danger mb-1" style="width: 60px"
+                                                        onclick="DeleteConfirmation('{% url 'faculty:delete-profile' faculty.user_id %}?next={{ request.path|urlencode }}')">
+                                                    delete
+                                                </button>
+                                                <button class="btn btn-sm btn-warning mb-1" style="width: 60px"
+                                                        onclick="window.location.href='{% url 'faculty:profile' faculty.user_id %}'">
+                                                    view
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+                                {% comment %}
+                                    <a href="#">
+                                        <li class="list-group-item small mb-2 list-group-item-action text-center">
+                                            <strong>Add Faculties</strong>
+                                        </li>
+                                    </a>
+                                    {% endcomment %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-header font-weight-bolder text-center"
+                                 style="background-color: goldenrod;">Exams
+                            </div>
+                            <div class="card-body table-responsive">
+                                <table class="table table-responsive  w-100 d-block d-md-table table-hover table-bordered font-weight-bold text-black-50">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Session</th>
+                                        <th>Date</th>
+                                        <th>Last Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for i in exam %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td><a href="{% url 'exam:exam-details' i.slug %}" class="card-link"
+                                                   data-toggle="tooltip" title="Open">{{ i.name }}</a></td>
+                                            <td>{{ i.start_date.year }}</td>
+                                            <td>{{ i.start_date }}</td>
+                                            <td>{{ i.end_date }}</td>
+                                            <td><span class="label label-info">{{ i.status }}</span></td>
+                                        </tr>
+                                     {% empty %}
+                                        <p>No active exams ask Examination controller to add exams</p>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-lg-8 mb-2">
+                        <div class="card table-responsive">
+                            <div class="card-header text-white-50 font-weight-bolder text-center"
+                                 style="background-color: #525965">Students
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-responsive  w-100 d-block d-md-table" id="studentTable">
+                                    <thead>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Roll Number</th>
+                                    <th>Department</th>
+                                    <th>Verified</th>
+                                    <th>Controls</th>
+                                    </thead>
+                                    <tfoot class="text-muted">
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>ID</th>
+                                    <th>Department</th>
+                                    <th>Verified</th>
+                                    <th>Controls</th>
+                                    </tfoot>
+
+                                    <tbody>
+                                    {% for student in students %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ student.get_full_name }}</td>
+                                            <td>{{ student.user_id }}</td>
+                                            <td>{{ student.dept }}</td>
+                                            <td class="text-justify">
+                                                {% if student.is_active %}
+                                                    <i class="text-success fas fa-check-circle"></i>
+                                                {% else %}
+                                                    <i class="text-danger fas fa-times-circle"></i>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                               <button class="btn btn-sm btn-danger mb-1" style="width: 60px"
+                                                        onclick="DeleteConfirmation('{% url 'student:delete-profile' student.user_id %}?next={{ request.path|urlencode }}')">
+                                                    delete
+                                                </button>
+                                                <button class="btn btn-sm btn-warning mb-1" style="width: 60px"
+                                                        onclick="window.location.href='{% url 'student:profile' student.user_id %}'">
+                                                    view
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-header text-white-50 font-weight-bolder text-center"
+                                 style="background-color: #525965">Subjects
+                            </div>
+                            <div class="card-body">
+                                <div id="id_subject">
+                                    <ul class="list-group">
+                                        <a class="card-link" data-toggle="collapse" href="#id_cs">
+                                            <li class="list-group-item list-group-item-action text-center">
+                                                <strong>Computer Science</strong>
+                                            </li>
+                                        </a>
+
+                                        <div id="id_cs" class="collapse" data-parent="#id_subject">
+                                            {% for subject in subjects|applied_science_subject:'CS' %}
+                                                <li class="list-group-item rounded mb-1">
+                                                    {{ subject }}
+                                                </li>
+                                            {% empty %}
+                                                <li class="list-group-item rounded mb-1 mt-1 list-group-item-danger">
+                                                    Not Uploaded
+                                                </li>
+                                            {% endfor %}
+                                        </div>
+                                    </ul>
+                                    <ul class="list-group">
+                                        <a class="card-link collapsed" data-toggle="collapse" href="#id_civil">
+                                            <li class="list-group-item list-group-item-action text-center">
+                                                <strong>Civil Engineering</strong>
+                                            </li>
+                                        </a>
+
+                                        <div id="id_civil" class="collapse" data-parent="#id_subject">
+                                            {% for subject in subjects|applied_science_subject:'Civil' %}
+                                                <li class="list-group-item rounded mb-1 mt-1">
+                                                    {{ subject }}
+                                                </li>
+                                            {% empty %}
+                                                <li class="list-group-item rounded mb-1 mt-1 list-group-item-danger">
+                                                    Not Uploaded
+                                                </li>
+                                            {% endfor %}
+                                        </div>
+                                    </ul>
+                                    <ul class="list-group">
+                                        <a class="card-link collapsed" data-toggle="collapse" href="#id_ec">
+                                            <li class="list-group-item list-group-item-action text-center">
+                                                <strong>Electronic & Communication</strong>
+                                            </li>
+                                        </a>
+
+                                        <div id="id_ec" class="collapse" data-parent="#id_subject">
+                                            {% for subject in subjects|applied_science_subject:'EC' %}
+                                                <li class="list-group-item rounded mb-1 mt-1">
+                                                    {{ subject }}
+                                                </li>
+                                            {% empty %}
+                                                <li class="list-group-item rounded mb-1 mt-1 list-group-item-danger">
+                                                    Not Uploaded
+                                                </li>
+                                            {% endfor %}
+                                        </div>
+                                    </ul>
+
+                                    <ul class="list-group">
+                                        <a class="card-link collapsed" data-toggle="collapse" href="#id_ee">
+                                            <li class="list-group-item list-group-item-action text-center">
+                                                <strong>Electrical Engineering</strong>
+                                            </li>
+                                        </a>
+
+                                        <div id="id_ee" class="collapse" data-parent="#id_subject">
+                                            {% for subject in subjects|applied_science_subject:'EE' %}
+                                                <li class="list-group-item rounded mb-1 mt-1">
+                                                    {{ subject }}
+                                                </li>
+                                            {% empty %}
+                                                <li class="list-group-item rounded mb-1 mt-1 list-group-item-danger">
+                                                    Not Uploaded
+                                                </li>
+                                            {% endfor %}
+                                        </div>
+                                    </ul>
+                                    <ul class="list-group">
+                                        <a class="card-link collapsed" data-toggle="collapse" href="#id_me">
+                                            <li class="list-group-item list-group-item-action text-center">
+                                                <strong>Mechanical Engineering</strong>
+                                            </li>
+                                        </a>
+
+                                        <div id="id_me" class="collapse" data-parent="#id_subject">
+                                            {% for subject in subjects|applied_science_subject:'ME' %}
+                                                <li class="list-group-item rounded mb-1 mt-1">
+                                                    {{ subject }}
+                                                </li>
+                                            {% empty %}
+                                                <li class="list-group-item rounded mb-1 mt-1 list-group-item-danger">
+                                                    Not Uploaded
+                                                </li>
+                                            {% endfor %}
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- page-content" -->
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+    <script type="text/javascript">
+        function DeleteConfirmation(url) {
+            let r = confirm("Are you Confirm ?");
+            if (r === true) {
+                window.location.href = url;
+            }
+        }
+
+
+    </script>
+    <script>
+        var table = $('#dataTable').DataTable({
+            "paging": false,
+
+
+        });
+        var student_table = $('#studentTable').DataTable({
+            "paging": false,
+            initComplete: function () {
+                this.api().column(3).each(function () {
+                    var column = this;
+                    var select = $('<select class="form-control"><option value=""></option></select>')
+                        .appendTo($(column.header()))
+                        .on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search(val ? '^' + val + '$' : '', true, false)
+                                .draw();
+                        });
+
+                    column.data().unique().sort().each(function (d, j) {
+                        select.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                });
+            }
+        });
+    </script>
+{% endblock %}

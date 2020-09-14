@@ -1,0 +1,229 @@
+{% extends 'exam_module/base.html' %}
+{% load static %}
+{% load extra_filters %}
+{% block title %}{{ questionpaper.subject }}{% endblock %}
+{% block body %}
+    <nav class="navbar navbar-light bg-white">
+        <a href="#" class="navbar-brand">{{ questionpaper.subject }}</a>
+        <h6 id="demo"></h6>
+    </nav>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- About Exam -->
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="h5">{{ questionpaper.exam.name }}</div>
+                        <div class="h7 text-muted">{{ questionpaper.exam.start_date }}</div>
+                        <div class="h7">{{ questionpaper.exam.description }}</div>
+                    </div>
+                    <hr>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="text-muted text-center">Question Sitemap</div>
+                            <!--MCQ -->
+                            <p class="nav-tabs">
+                                <span class="h6 text-center mr-2">MCQ</span>
+                                {% for que in questionpaper.questions.all|get_question:'MCQ' %}
+                                    <a href="#mcq_{{ forloop.counter }}" class="badge badge-success">
+                                        {{ forloop.counter }}
+                                    </a>
+                                {% empty %}
+                                {% endfor %}
+                            </p>
+
+                            <!--Short -->
+                            <p class="nav-tabs">
+                                <span class="h6 text-center mr-2">Short</span>
+                                {% for que in questionpaper.questions.all|get_question:'Short' %}
+                                    <a href="#short_{{ forloop.counter }}" class="badge badge-warning">
+                                        {{ forloop.counter }}
+                                    </a>
+                                {% empty %}
+                                {% endfor %}
+                            </p>
+
+                            <!--Long -->
+                            <p class="nav-tabs">
+                                <span class="h6 text-center mr-2">Long</span>
+                                {% for que in questionpaper.questions.all|get_question:'Long' %}
+                                    <a href="#long_{{ forloop.counter }}" class="badge badge-danger">
+                                        {{ forloop.counter }}
+                                    </a>
+                                {% empty %}
+                                {% endfor %}
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Question Block -->
+            <div class="col-md-6">
+
+                <!-- MCQ -->
+                <div class="card" id="MCQ">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="mr-2"><h4 class="badge badge-dark">Section A</h4></div>
+                                <div class="ml-2">
+                                    <div class="h5 m-0">Multiple Choice Questions</div>
+                                </div>
+                                <div class="ml-5">
+                                    <a href="{% url 'exam:add-question' questionpaper.id 'MCQ' %}"
+                                       data-toggle="tooltip" id="id_question" title="add MCQ Question"
+                                       onclick="return showAddPopup(this);">
+                                            <span class="badge badge-primary float-lg-right mr-3">
+                                                <i class="fas fa-plus"></i>
+                                            </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            {% for question in questionpaper.questions.all|get_question:'MCQ' %}
+                                <li class="list-group-item">
+                                    {{ question }}
+                                    <div class="float-right">
+                                        <span class="badge-pill badge-warning " data-toggle="tooltip"
+                                              title="marks">{{ question.max_marks }}</span>
+                                        <a href="{% url 'exam:delete-question' question.id %}?next={{ request.path|urlencode }}"
+                                           data-toggle="tooltip" title="Delete">
+                                        <span class="badge-pill badge-danger ml-2">
+                                            <i class="fas fa-trash"></i>
+                                        </span>
+                                        </a>
+                                    </div>
+
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Short -->
+                <div class="card" id="short">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="mr-2"><h4 class="badge badge-dark">Section B</h4></div>
+                                <div class="ml-2">
+                                    <div class="h5 m-0">Short Questions</div>
+                                </div>
+                                <div class="ml-5">
+                                    <a href="{% url 'exam:add-question' questionpaper.id 'Short' %}"
+                                       data-toggle="tooltip"
+                                       id="id_question"
+                                       title="add Short Question" onclick="return showAddPopup(this);">
+                                            <span class="badge badge-primary float-lg-right mr-3">
+                                                <i class="fas fa-plus"></i>
+                                            </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            {% for question in questionpaper.questions.all|get_question:'Short' %}
+                                <li class="list-group-item">
+                                    {{ question }}
+                                    <div class="float-right">
+                                        <span class="badge-pill badge-warning " data-toggle="tooltip"
+                                              title="marks">{{ question.max_marks }}</span>
+                                        <a href="{% url 'exam:delete-question' question.id %}?next={{ request.path|urlencode }}"
+                                           data-toggle="tooltip" title="Delete">
+                                        <span class="badge-pill badge-danger ml-2">
+                                            <i class="fas fa-trash"></i>
+                                        </span>
+                                        </a>
+                                    </div>
+
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Long -->
+                <div class="card" id="long">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="mr-2"><h4 class="badge badge-dark">Section C</h4></div>
+                                <div class="ml-2">
+                                    <div class="h5 m-0">Long Questions</div>
+                                </div>
+                                <div class="ml-5">
+                                    <a href="{% url 'exam:add-question' questionpaper.id 'Long' %}"
+                                       data-toggle="tooltip"
+                                       id="id_question"
+                                       title="add Long Question" onclick="return showAddPopup(this);">
+                                            <span class="badge badge-primary float-lg-right mr-3">
+                                                <i class="fas fa-plus"></i>
+                                            </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            {% for question in questionpaper.questions.all|get_question:'Long' %}
+                                <li class="list-group-item">
+                                    {{ question }}
+                                    <div class="float-right">
+                                        <span class="badge-pill badge-warning " data-toggle="tooltip"
+                                              title="marks">{{ question.max_marks }}</span>
+                                        <a href="{% url 'exam:delete-question' question.id %}?next={{ request.path|urlencode }}"
+                                           data-toggle="tooltip" title="Delete">
+                                        <span class="badge-pill badge-danger ml-2">
+                                            <i class="fas fa-trash"></i>
+                                        </span>
+                                        </a>
+                                    </div>
+
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Profile Block -->
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="{{ request.session.image }}" style="width: 100%;">
+                        <h5 class="card-title">{{ request.user.get_full_name }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ request.user }}</h6>
+                        <p class="card-text">{{ request.session.role }}</p>
+                        <a href="{% url 'exam:exam-details' questionpaper.exam.slug %}" class="card-link">Finish</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function showAddPopup(triggeringLink) {
+            var name = triggeringLink.id.replace(/^add_/, '');
+            href = triggeringLink.href;
+            var win = window.open(href, name, 'height=500,width=800,resizable=yes,scrollbars=yes');
+            win.focus();
+            return false;
+        }
+
+        function closePopup(win) {
+            win.close();
+        }
+
+    </script>
+{% endblock %}
+
+
